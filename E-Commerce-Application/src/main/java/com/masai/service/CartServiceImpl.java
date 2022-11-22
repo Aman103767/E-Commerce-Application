@@ -1,5 +1,6 @@
 package com.masai.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,17 @@ public class CartServiceImpl implements CartService{
 		
 		return "Product not added to the cart" ;
 	}
+
+	@Override
+	public List<Product> getAllProduct(Integer cartId) {
+		// TODO Auto-generated method stub
+	Optional<Cart> c = 	cdao.findById(cartId);
+		if(c.isPresent()) {
+			Cart cart =c.get();
+			return cart.getProducts();
+		}
+		return null;
+	}
+	
 
 }
