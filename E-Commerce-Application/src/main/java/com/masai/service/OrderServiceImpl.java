@@ -9,14 +9,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exceptions.AdminException;
+import com.masai.exceptions.CustomerException;
 import com.masai.exceptions.OrderException;
 import com.masai.model.Cart;
+import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
 import com.masai.model.Orders;
 import com.masai.model.Product;
 import com.masai.repository.CartDao;
 import com.masai.repository.OrderDao;
 import com.masai.repository.ProductDao;
+import com.masai.repository.SessionDao;
 @Service
 public class OrderServiceImpl implements OrderService{
 	@Autowired
@@ -28,10 +32,24 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
     OrderDao odao;
+	
+	@Autowired
+	SessionDao sessionDao;
 
 	@Override
-	public List<Product> OrderProducts(Integer cartId) throws OrderException {
+	public List<Product> OrderProducts(Integer cartId,String key,Integer customerId) throws OrderException, CustomerException {
 		// TODO Auto-generated method stub
+		
+		   
+        CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+        
+        if(loggedInUser == null) {
+        	throw new CustomerException("Please provide a valid key to create a Product");
+        }
+        
+        if(customerId == loggedInUser.getUserId()) {
+       
+	
 		Optional<Cart> OptionalCart = cdao.findById(cartId);
 		
 		if(OptionalCart.isPresent()) {
@@ -53,5 +71,11 @@ public class OrderServiceImpl implements OrderService{
 		throw new OrderException("cart not found with id "+ cartId);
 		
 	}
+        else {
+        	throw new CustomerException("Wrong details please login first");
+        	
+	}
+	}
+	
 
 }
