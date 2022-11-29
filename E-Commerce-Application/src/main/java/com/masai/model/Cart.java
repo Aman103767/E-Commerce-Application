@@ -27,6 +27,6 @@ public class Cart {
  private Customer customer;
  
  @OneToMany
- private List<Product> Cartproducts;
+ private List<Product> Cartproducts = new ArrayList<>();
 
 }

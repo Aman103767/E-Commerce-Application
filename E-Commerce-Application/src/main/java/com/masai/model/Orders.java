@@ -34,7 +34,7 @@ public class Orders {
 	@ManyToOne
 	private Customer customer;
 	@OneToMany
-	private List<Product> products;
+	private List<Product> products = new ArrayList<>();
 	@OneToOne
 	private Address address;
 

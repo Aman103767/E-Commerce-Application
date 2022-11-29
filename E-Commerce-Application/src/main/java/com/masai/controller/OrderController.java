@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.exceptions.OrderException;
 import com.masai.model.Product;
 import com.masai.service.OrderService;
 
@@ -21,7 +22,7 @@ public class OrderController {
 	OrderService orderService;
    
 	@GetMapping("/{cartId}")
-	public ResponseEntity<List<Product>> Order(@PathVariable("cartId") Integer cartId){
+	public ResponseEntity<List<Product>> Order(@PathVariable("cartId") Integer cartId) throws OrderException{
 		
 		List<Product> list = orderService.OrderProducts(cartId);
 		
