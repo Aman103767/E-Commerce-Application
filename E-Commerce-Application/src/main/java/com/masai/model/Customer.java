@@ -1,6 +1,6 @@
 package com.masai.model;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,13 +19,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer extends User{
 	@Id
 	@GeneratedValue(strategy  = GenerationType.AUTO) 
 	private int customerId;
-	private String name;
-	private String mobileNumber;
-	private String email;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 	

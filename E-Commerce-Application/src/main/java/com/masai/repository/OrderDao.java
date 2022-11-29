@@ -1,4 +1,4 @@
-package com.masai.Repository;
+package com.masai.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -9,14 +9,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.Repository.CartDao;
-import com.masai.Repository.OrderDao;
-import com.masai.Repository.ProductDao;
 import com.masai.exceptions.OrderException;
 import com.masai.model.Cart;
 import com.masai.model.Customer;
 import com.masai.model.Orders;
 import com.masai.model.Product;
+import com.masai.repository.CartDao;
+import com.masai.repository.OrderDao;
+import com.masai.repository.ProductDao;
 @Service
 public class OrderServiceImpl implements OrderService{
 	@Autowired
