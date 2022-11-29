@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService{
 		Product product = p.get();
 		Cart cart = new Cart();
 		cart.setCustomer(customer);
-		cart.getProducts().add(product);
+		cart.getCartproducts().add(product);
 		
 		cdao.save(cart);
 		return "Product added to the cart";
@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService{
 	Optional<Cart> c = 	cdao.findById(cartId);
 		if(c.isPresent()) {
 			Cart cart =c.get();
-			return cart.getProducts();
+			return cart.getCartproducts();
 		}
 		return null;
 	}
