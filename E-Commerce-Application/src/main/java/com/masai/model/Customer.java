@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,10 @@ public class Customer extends User{
 	private int customerId;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+    private Cart cart;
 	
 
     

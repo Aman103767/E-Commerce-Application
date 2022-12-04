@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-  private int cartId;
- @OneToOne	  
+  private Integer cartId;
+ @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")	  
  private Customer customer;
  
  @OneToMany

@@ -1,5 +1,6 @@
 package com.masai.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,24 +40,49 @@ public class CartServiceImpl implements CartService{
 	        }
 	        
 	        if(customerId == loggedInUser.getUserId()) {
-		
+	        	
+//	          Optional<Product> pro = pdao.findById(productId);
+//	          if(pro.isPresent() == false) {
+	   
     Optional<Customer> c = custdao.findById(customerId);
 	Optional<Product> p = pdao.findById(productId);
 	if(p.isPresent()&& c.isPresent()) {
 		Customer customer = c.get();
 		Product product = p.get();
-		Cart cart = new Cart();
-		cart.setCustomer(customer);
-		cart.getCartproducts().add(product);
-		
-		
-		cdao.save(cart);
+		Cart c1 = customer.getCart();
+		if(c1 != null) {
+		//Cart cart = new Cart();
+//		if(cart.getCartId() != null) {
+//			cart.setCartId(cart.getCartId());
+//		}
+		List<Product> list = c1.getCartproducts();
+		for(int i=0;i<list.size();i++) {
+			if(productId == list.get(i).getProductId()) {
+			     return "Product is already added to the cart";
+			}
+		}
+		c1.getCartproducts().add(product);
+		}
+		else {
+		//	return c1.toString()
+			c1 = new Cart();
+			c1.getCartproducts().add(product);
+		    c1.setCustomer(customer);
+		    customer.setCart(c1);
+		    
+		    
+		}
+
+		cdao.save(c1);
 		return "Product added to the cart";
 	}
 		
 	      throw new CartException("Customerid or productid not found");
-	      
-	        }else {
+//	          }else {
+//	        	  throw new CartException("product already added to the cart");
+//	          }
+	        }
+	        else {
 	    		throw new CustomerException("wrong Details please login first!");
 	    	}
 	}
