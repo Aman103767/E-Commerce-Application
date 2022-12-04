@@ -34,6 +34,6 @@ public class User {
    @Email
    private String email;
    
-  // private LocalDate dateOfCreation = LocalDate.now();
+   private LocalDate dateOfCreation = LocalDate.now();
 
 }

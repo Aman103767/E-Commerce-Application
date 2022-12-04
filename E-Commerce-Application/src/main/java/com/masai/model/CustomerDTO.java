@@ -11,6 +11,7 @@ public class CustomerDTO {
 	
 	private String name;
 	private String mobileNumber;
+	private String password;
 	private String email;
 	private String buildingNo;
 	private String city;
