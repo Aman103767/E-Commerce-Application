@@ -14,6 +14,7 @@ import com.masai.model.Cart;
 import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
 import com.masai.model.Product;
+import com.masai.model.ProductDtoSec;
 import com.masai.repository.CartDao;
 import com.masai.repository.CustomerDao;
 import com.masai.repository.ProductDao;
@@ -32,7 +33,7 @@ public class CartServiceImpl implements CartService{
    private SessionDao sessionDao;
 	
 	@Override
-	public String addProductToCart(Integer customerId,Integer productId ,String key) throws  CustomerException, CartException {
+	public String addProductToCart(Integer customerId,Integer quantity,Integer productId ,String key) throws  CustomerException, CartException {
 		// TODO Auto-generated method stub
 		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
 		  if(loggedInUser == null) {
@@ -49,31 +50,45 @@ public class CartServiceImpl implements CartService{
 	if(p.isPresent()&& c.isPresent()) {
 		Customer customer = c.get();
 		Product product = p.get();
+		
+		if(product.getQunatity()< quantity) {
+			throw new CartException("Out of Stock");
+		}
 		Cart c1 = customer.getCart();
+		  ProductDtoSec prodto2= new ProductDtoSec(); 
+          prodto2.setProductId(productId);
+          prodto2.setProductName(product.getProductName());
+          prodto2.setQuantity(quantity);
+          prodto2.setDimension(product.getDimension());
+          prodto2.setManufacturer(product.getManufacturer());
+          prodto2.setPrice(product.getPrice());
 		if(c1 != null) {
 		//Cart cart = new Cart();
 //		if(cart.getCartId() != null) {
 //			cart.setCartId(cart.getCartId());
 //		}
-		List<Product> list = c1.getCartproducts();
+		List<ProductDtoSec> list = c1.getCartproducts();
 		for(int i=0;i<list.size();i++) {
 			if(productId == list.get(i).getProductId()) {
-			     return "Product is already added to the cart";
+			   return "Product is already added to the cart";
 			}
 		}
-		c1.getCartproducts().add(product);
+	     
+	          
+		
+		c1.getCartproducts().add(prodto2);
 		}
 		else {
 		//	return c1.toString()
 			c1 = new Cart();
-			c1.getCartproducts().add(product);
+			c1.getCartproducts().add(prodto2);
 		    c1.setCustomer(customer);
 		    customer.setCart(c1);
 		    
 		    
 		}
-
 		cdao.save(c1);
+		
 		return "Product added to the cart";
 	}
 		
@@ -88,7 +103,7 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List<Product> getAllProduct(Integer cartId,String key,Integer CustomerId ) throws CustomerException, CartException {
+	public List<ProductDtoSec> getAllProduct(Integer cartId,String key,Integer CustomerId ) throws CustomerException, CartException {
 		
 		  
         CurrentUserSession loggedInUser = sessionDao.findByUuid(key);

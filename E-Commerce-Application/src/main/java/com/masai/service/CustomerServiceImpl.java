@@ -22,13 +22,6 @@ public class CustomerServiceImpl implements CustomerService{
 		cust.setEmail(customer.getEmail());
 		cust.setMobileNumber(customer.getMobileNumber());
 		cust.setPassword(customer.getPassword());
-		Address add = new Address();
-		add.setBuildingNo(customer.getBuildingNo());
-		add.setCity(customer.getCity());
-		add.setPincode(customer.getPincode());
-		add.setState(customer.getPincode());
-		add.setCountry(customer.getCountry());
-		cust.setAddress(add);
 		cdao.save(cust);
 		return cust;
 		

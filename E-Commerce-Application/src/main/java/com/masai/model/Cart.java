@@ -26,7 +26,7 @@ public class Cart {
  @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")	  
  private Customer customer;
  
- @OneToMany
- private List<Product> Cartproducts = new ArrayList<>();
+ @OneToMany(cascade = CascadeType.ALL)
+ private List<ProductDtoSec> Cartproducts = new ArrayList<>();
 
 }

@@ -13,9 +13,9 @@ public class CustomerDTO {
 	private String mobileNumber;
 	private String password;
 	private String email;
-	private String buildingNo;
-	private String city;
-	private String state;
-	private String country;
-	private String pincode;
+//	private String buildingNo;
+//	private String city;
+//	private String state;
+//	private String country;
+//	private String pincode;
 }
