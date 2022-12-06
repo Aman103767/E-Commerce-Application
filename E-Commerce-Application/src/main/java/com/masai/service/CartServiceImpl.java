@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService{
 		Customer customer = c.get();
 		Product product = p.get();
 		
-		if(product.getQunatity()< quantity) {
+		if(product.getQunatity()< quantity || quantity == 0) {
 			throw new CartException("Out of Stock");
 		}
 		Cart c1 = customer.getCart();
@@ -125,6 +125,41 @@ public class CartServiceImpl implements CartService{
 	else {
 		throw new CustomerException("wrong Details please login first!");
 	}
+	}
+
+	@Override
+	public String removeProductfromCart(Integer productId,String key, Integer customerId) throws CustomerException, CartException {
+		// TODO Auto-generated method stub
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to get all products");
+	        }
+	        
+	        if(customerId == loggedInUser.getUserId()) {
+	           Customer cust = custdao.findById(customerId).get();
+	           Cart cart = cust.getCart();
+	           if(cart == null) {
+	        	   throw new CartException("Please first add product to the cart");
+	           }
+	           List<ProductDtoSec> products = cart.getCartproducts();
+	           if(products.size() == 0) {
+	        	   throw new CartException("Please first add product to the cart");
+	           }
+	           for(int i =0;i<products.size();i++) {
+	        	   if(productId == products.get(i).getProductId()) {
+	        		   products.remove(i);
+	        		   break;
+	        	   }
+	           }
+	           cart.setCartproducts(products);
+	           cdao.save(cart);
+	           return "Product removed from the cart successfully";
+	           
+	        }else {
+	    		throw new CustomerException("wrong Details please login first!");
+	    	}
+			
 	}
 	
 

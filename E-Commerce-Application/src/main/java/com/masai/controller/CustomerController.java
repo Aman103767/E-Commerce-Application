@@ -1,10 +1,13 @@
 package com.masai.controller;
 
-import java.util.List; 
+import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +73,12 @@ public class CustomerController {
 		
 		return new  ResponseEntity<List<ProductDtoSec>>(list,HttpStatus.OK);
 		
+		
+	}
+	@DeleteMapping("/removeProductFromCart")
+	public ResponseEntity<String> removeProductFromCart(@RequestParam Integer productId,@RequestParam String key,@RequestParam Integer CustomerId) throws CustomerException, CartException{
+		String mess = cservice.removeProductfromCart(productId, key, CustomerId);
+		return new ResponseEntity<String>(mess, HttpStatus.OK);
 		
 	}
 	
