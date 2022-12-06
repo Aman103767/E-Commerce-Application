@@ -25,6 +25,8 @@ import com.masai.model.ProductDTO;
 import com.masai.service.AdminService;
 import com.masai.service.ProductService;
 
+import io.swagger.models.Response;
+
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -71,9 +73,30 @@ public class AdminController {
 		Product p = pService.createProduct(product,key,adminId);
 		return new ResponseEntity<Product>(p,HttpStatus.OK);
 	}
-
 	
+    @DeleteMapping("/removeProduct")
+	public ResponseEntity<String> removeProduct(@RequestParam Integer productId,@RequestParam String key,@RequestParam Integer AdminId) throws AdminException {
+		String mess = pService.removeProduct(productId, key, AdminId);
+		return new ResponseEntity<String>(mess,HttpStatus.OK);
+	}
+    
+	@PutMapping("/updateProduct")
+	public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO product ,@RequestParam Integer adminId ,@RequestParam String key) throws AdminException {
+		Product p = pService.updateProduct(product,key,adminId);
+		return new ResponseEntity<Product>(p,HttpStatus.OK);
+	}
 	
+	@GetMapping("/getProductById") 
+	public ResponseEntity<Product> getProductById(@RequestParam Integer productId,@RequestParam Integer adminId,@RequestParam String key) throws AdminException{
+		Product p = pService.productById(productId, key, adminId);
+		return new ResponseEntity<Product>(p,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAllProduct") 
+	public ResponseEntity<List<Product>> getProductById(@RequestParam Integer adminId,@RequestParam String key) throws AdminException{
+		List<Product> p = pService.getAllProduct(key, adminId);
+		return new ResponseEntity<List<Product>>(p,HttpStatus.OK);
+	}
 	
 
 }
