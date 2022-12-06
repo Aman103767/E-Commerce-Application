@@ -2,6 +2,7 @@ package com.masai.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,7 @@ import com.masai.service.OrderService;
 public class CustomerController {
 	
     @Autowired
-	CustomerService cService;
+	CustomerService custService;
     
     @Autowired
 	CartService cservice;
@@ -46,14 +48,23 @@ public class CustomerController {
     
 	
 	@PostMapping("/create")
-	public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDTO cDTO){
+	public ResponseEntity<Customer> createCustomer( @RequestBody CustomerDTO cDTO) throws CustomerException{
 		
-		Customer cust = cService.createCustomer(cDTO);
+		Customer cust = custService.createCustomer(cDTO);
 		return new ResponseEntity<Customer>(cust,HttpStatus.OK);
 		
 		
 	}
-	 
+	@PutMapping("/update")
+	public  ResponseEntity<Customer> updateCustomer(@Valid @RequestBody CustomerDTO customer,@RequestParam(required = false) String key ) throws CustomerException {
+		
+		
+		Customer updatedCustomer= custService.updateCustomer(customer, key);
+				
+		return new ResponseEntity<Customer>(updatedCustomer,HttpStatus.OK);
+		
+	}
+	
     @GetMapping("/cart")
 	public ResponseEntity<String> addToCart(@RequestParam Integer customerId,@RequestParam Integer quantity,@RequestParam Integer productId ,@RequestParam String key) throws CartException, CustomerException{
 	    	String mess = cservice.addProductToCart(customerId,quantity, productId,key);
@@ -108,9 +119,5 @@ public class CustomerController {
 		return new ResponseEntity<Orders>(order,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getAllOrders")
-	public ResponseEntity<List<Orders>> getAllOrders(@RequestParam String key,@RequestParam Integer customerid) throws OrderException, CustomerException {
-		List<Orders> order = orderService.getAllOrders( key, customerid);
-		return new ResponseEntity<List<Orders>>(order,HttpStatus.OK);
-	}
+
 }

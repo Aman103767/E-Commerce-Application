@@ -21,10 +21,12 @@ import com.masai.exceptions.AdminException;
 import com.masai.exceptions.CustomerException;
 import com.masai.exceptions.OrderException;
 import com.masai.model.Admin;
+import com.masai.model.Customer;
 import com.masai.model.Orders;
 import com.masai.model.Product;
 import com.masai.model.ProductDTO;
 import com.masai.service.AdminService;
+import com.masai.service.CustomerService;
 import com.masai.service.OrderService;
 import com.masai.service.ProductService;
 
@@ -43,6 +45,9 @@ public class AdminController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+    private CustomerService custService;
 	
 
 	
@@ -70,6 +75,21 @@ public class AdminController {
 		String DeleteAdmin = AService.deleteAdmin(adminId, key);
 		
 		return new ResponseEntity<String>(DeleteAdmin,HttpStatus.OK);
+	}
+	@GetMapping("/viewAll/{adminId}/{key}")
+	public ResponseEntity<List<Customer>> findAllCustomer(@PathVariable("adminId") Integer AdminId,@PathVariable("key") String key) throws CustomerException{
+		
+		List<Customer> customers = custService.viewCustomerAll(AdminId,key);
+		
+		return new ResponseEntity<List<Customer>>(customers,HttpStatus.OK);
+	}
+	
+	@GetMapping("/viewById/{customerId}/{key}/{adminId}")
+	public ResponseEntity<Customer> findCustomerById(@PathVariable("customerId") Integer customerId, @PathVariable("key") String key,@PathVariable("adminId") Integer adminId) throws CustomerException{
+		Customer customer = custService.viewCustomer(customerId,key,adminId);
+		
+		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
+		
 	}
 	
 

@@ -8,14 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDTO {
-	
+	private Integer id;
 	private String name;
 	private String mobileNumber;
 	private String password;
 	private String email;
-//	private String buildingNo;
-//	private String city;
-//	private String state;
-//	private String country;
-//	private String pincode;
+
 }
