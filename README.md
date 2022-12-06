@@ -24,6 +24,19 @@ This is a Individual project, I have built a rest API service for an Online Shop
 
 - Data Authentication and Validation for all the users (Admin and Customer)
 
+## Admin Features
+- Admin can access all Order details along with specific Order details using a particular customerId.
+- Admin can Add product and remove as well.
+
+
+## Customer Features
+- Customer can login in the application and update their information using their mobile number and password.
+- Customer can add product to cart and remove the product from cart as well.
+- Customer can update quantity after adding the product to the cart.
+- Customer can Order the product and Cancel as Well.
+
+
+
 - # Installation & Run
  - Before running the API server, you should update the database config inside the application.properties file.
 - Update the port number, username and password as per your local database configuration.
