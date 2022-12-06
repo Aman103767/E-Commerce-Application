@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exceptions.AdminException;
-
+import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.OrderException;
 import com.masai.model.Admin;
+import com.masai.model.Orders;
 import com.masai.model.Product;
 import com.masai.model.ProductDTO;
 import com.masai.service.AdminService;
+import com.masai.service.OrderService;
 import com.masai.service.ProductService;
 
 import io.swagger.models.Response;
@@ -37,6 +40,9 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService pService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 
 	
@@ -97,6 +103,10 @@ public class AdminController {
 		List<Product> p = pService.getAllProduct(key, adminId);
 		return new ResponseEntity<List<Product>>(p,HttpStatus.OK);
 	}
-	
+	@GetMapping("/getAllOrders")
+	public ResponseEntity<List<Orders>> getAllOrders(@RequestParam String key,@RequestParam Integer Adminid) throws OrderException, CustomerException {
+		List<Orders> order = orderService.getAllOrders(key, Adminid);
+		return new ResponseEntity<List<Orders>>(order,HttpStatus.OK);
+	}
 
 }

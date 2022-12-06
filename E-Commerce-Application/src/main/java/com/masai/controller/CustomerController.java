@@ -68,7 +68,7 @@ public class CustomerController {
 	    }
 	
 
-	@PostMapping("/OrderProduct")
+	@PostMapping("/orderProduct")
 	public ResponseEntity<Orders> Order(@RequestParam String key,@RequestParam Integer CustomerId,@RequestBody AddressDto addDto) throws OrderException, CustomerException{
 		
 		Orders order = orderService.OrderProducts(key,CustomerId,addDto);
@@ -95,12 +95,22 @@ public class CustomerController {
 		Cart cart = cservice.removeAllProduct(key, customerId);
 		return new  ResponseEntity<Cart>(cart,HttpStatus.OK);
 	}
-	@DeleteMapping("/CancelOrder")
+	@DeleteMapping("/cancelOrder")
 	public ResponseEntity<String> CancelOrder(@RequestParam Integer orderId,@RequestParam String key,@RequestParam Integer customerid) throws OrderException, CustomerException{
 		 
 		String mess = orderService.cancelOrder(orderId, key, customerid);
 		return new ResponseEntity<String>(mess,HttpStatus.OK);
 		
 	}
+	@GetMapping("/getOrderById")
+	public ResponseEntity<Orders> getOrderByid(@RequestParam Integer orderId,@RequestParam String key,@RequestParam Integer customerid) throws OrderException, CustomerException {
+		Orders order = orderService.getOrderById(orderId, key, customerid);
+		return new ResponseEntity<Orders>(order,HttpStatus.OK);
+	}
 	
+	@GetMapping("/getAllOrders")
+	public ResponseEntity<List<Orders>> getAllOrders(@RequestParam String key,@RequestParam Integer customerid) throws OrderException, CustomerException {
+		List<Orders> order = orderService.getAllOrders( key, customerid);
+		return new ResponseEntity<List<Orders>>(order,HttpStatus.OK);
+	}
 }

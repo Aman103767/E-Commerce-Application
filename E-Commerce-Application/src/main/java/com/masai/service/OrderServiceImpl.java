@@ -157,6 +157,58 @@ public class OrderServiceImpl implements OrderService{
 		
 	
 	}
+
+	@Override
+	public Orders getOrderById(Integer orderId, String key, Integer customerId)
+			throws OrderException, CustomerException {
+		// TODO Auto-generated method stub
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to create a Product");
+	        }
+	        
+	        if(customerId == loggedInUser.getUserId()) {
+	        	Optional<Orders> order = odao.findById(orderId); 
+	        	if(order.isPresent()) {
+	        		Orders o = order.get();
+	        		return o;
+	        	}else {
+	        		throw new OrderException("Order not found with id :"+orderId);
+	        	}
+	        	
+	        	
+	        }else {
+	        	throw new CustomerException("Wrong details please login first");
+	        }
+	        	
+	
+	}
+
+	@Override
+	public List<Orders> getAllOrders(String key, Integer adminId) throws OrderException, CustomerException {
+		// TODO Auto-generated method stub
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to create a Product");
+	        }
+	        if(adminId == loggedInUser.getUserId()) {
+	        	List<Orders> orders = odao.findAll();
+	        	if(orders.size()== 0) {
+	        		throw new OrderException("No order found");
+	        	}
+	        	return orders;
+	        }
+	        else {
+	        	throw new CustomerException("Wrong details please login first");
+	        }
+		
+	}
+
+
+	
+	
 	
 	
 
