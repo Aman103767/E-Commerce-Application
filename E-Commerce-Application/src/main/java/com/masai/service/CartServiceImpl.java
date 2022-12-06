@@ -103,7 +103,7 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List<ProductDtoSec> getAllProduct(Integer cartId,String key,Integer CustomerId ) throws CustomerException, CartException {
+	public List<ProductDtoSec> getAllProduct(String key,Integer CustomerId ) throws CustomerException, CartException {
 		
 		  
         CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
@@ -113,17 +113,15 @@ public class CartServiceImpl implements CartService{
         }
         
         if(CustomerId == loggedInUser.getUserId()) {
-       
-		// TODO Auto-generated method stub
-	Optional<Cart> c = 	cartdao.findById(cartId);
-		if(c.isPresent()) {
-			Cart cart =c.get();
+        Customer cust = custdao.findById(CustomerId).get();
+        Cart cart = cust.getCart();
+        if(cart == null) {
+        	throw new CartException("Please add product to cart first!");
+        }
 			if(cart.getCartproducts().size() == 0) {
 				throw  new CartException("Cart is Empty");
 			}
 			return cart.getCartproducts();
-		}
-		throw new CartException("Cartid not found with "+cartId);
 	}
 	else {
 		throw new CustomerException("wrong Details please login first!");

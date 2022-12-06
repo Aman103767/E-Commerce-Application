@@ -12,7 +12,7 @@ public interface CartService {
 
 	public String addProductToCart(Integer customerId , Integer quantity,Integer productId,String key) throws CustomerException,CartException;
 	
-	public List<ProductDtoSec> getAllProduct(Integer cartId,String key,Integer CustomerId) throws CustomerException,CartException;
+	public List<ProductDtoSec> getAllProduct(String key,Integer CustomerId) throws CustomerException,CartException;
 	
     public String removeProductfromCart(Integer productId,String key,Integer customerId) throws CustomerException,CartException;
 	

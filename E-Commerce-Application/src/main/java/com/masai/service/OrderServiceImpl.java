@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@SuppressWarnings("unused")
 	@Override
-	public List<ProductDtoSec> OrderProducts(Integer cartId,String key,Integer customerId,AddressDto address) throws OrderException, CustomerException {
+	public Orders OrderProducts(String key,Integer customerId,AddressDto address) throws OrderException, CustomerException {
 		// TODO Auto-generated method stub
 		
 		   
@@ -59,7 +59,8 @@ public class OrderServiceImpl implements OrderService{
 		Optional<Customer> OptionalCust = custdao.findById(customerId);
 		
 		if(OptionalCust.isPresent()) {
-			Cart cart = OptionalCust.get().getCart();
+			Customer customer = OptionalCust.get();
+			Cart cart = customer.getCart();
 			if(cart.getCartproducts().size()==0) {
 				throw new OrderException("Please add the product in the cart first!");
 			}
@@ -87,7 +88,7 @@ public class OrderServiceImpl implements OrderService{
 			
 		}
 		order.setProducts(products);
-		
+		order.setOrderStatus("Order Comfirmed");
 		odao.save(order);
 		for(ProductDtoSec p : cart.getCartproducts()) {
 			Product product = pdao.findById(p.getProductId()).get();
@@ -97,9 +98,9 @@ public class OrderServiceImpl implements OrderService{
 		cart.getCartproducts().clear();
 		cdao.save(cart);
 		
-		return order.getProducts();
+		return order;
 		}
-		throw new OrderException("cart not found with id "+ cartId);
+		throw new OrderException("Customer not found with id "+OptionalCust.get().getCustomerId());
 		
 	}
         else {

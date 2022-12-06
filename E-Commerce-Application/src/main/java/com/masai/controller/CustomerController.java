@@ -23,6 +23,7 @@ import com.masai.model.AddressDto;
 import com.masai.model.Cart;
 import com.masai.model.Customer;
 import com.masai.model.CustomerDTO;
+import com.masai.model.Orders;
 import com.masai.model.Product;
 import com.masai.model.ProductDtoSec;
 import com.masai.service.CartService;
@@ -59,20 +60,20 @@ public class CustomerController {
 	    	return new ResponseEntity<String>(mess, HttpStatus.OK);
 	    }
 	@GetMapping("/getAllProductAddedInCart")
-	public ResponseEntity<List<ProductDtoSec>> getAllProductAddedToCart(@RequestParam Integer cartId,@RequestParam String key,@RequestParam Integer CustomerId) throws CartException, CustomerException{
-	   List<ProductDtoSec> products = cservice.getAllProduct(cartId,key,CustomerId);
+	public ResponseEntity<List<ProductDtoSec>> getAllProductAddedToCart(@RequestParam String key,@RequestParam Integer CustomerId) throws CartException, CustomerException{
+	   List<ProductDtoSec> products = cservice.getAllProduct(key,CustomerId);
 	   
 	   return new ResponseEntity<List<ProductDtoSec>>(products,HttpStatus.OK);
 	    	
 	    }
 	
 
-	@PostMapping("/{cartId}")
-	public ResponseEntity<List<ProductDtoSec>> Order(@PathVariable("cartId") Integer cartId,@RequestParam String key,@RequestParam Integer CustomerId,@RequestBody AddressDto addDto) throws OrderException, CustomerException{
+	@PostMapping("/OrderProduct")
+	public ResponseEntity<Orders> Order(@RequestParam String key,@RequestParam Integer CustomerId,@RequestBody AddressDto addDto) throws OrderException, CustomerException{
 		
-		List<ProductDtoSec> list = orderService.OrderProducts(cartId,key,CustomerId,addDto);
+		Orders order = orderService.OrderProducts(key,CustomerId,addDto);
 		
-		return new  ResponseEntity<List<ProductDtoSec>>(list,HttpStatus.OK);
+		return new  ResponseEntity<Orders>(order,HttpStatus.OK);
 		
 		
 	}
