@@ -95,6 +95,12 @@ public class CustomerController {
 		Cart cart = cservice.removeAllProduct(key, customerId);
 		return new  ResponseEntity<Cart>(cart,HttpStatus.OK);
 	}
-	
+	@DeleteMapping("/CancelOrder")
+	public ResponseEntity<String> CancelOrder(@RequestParam Integer orderId,@RequestParam String key,@RequestParam Integer customerid) throws OrderException, CustomerException{
+		 
+		String mess = orderService.cancelOrder(orderId, key, customerid);
+		return new ResponseEntity<String>(mess,HttpStatus.OK);
+		
+	}
 	
 }

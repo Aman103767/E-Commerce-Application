@@ -12,4 +12,6 @@ import com.masai.model.ProductDtoSec;
 
 public interface OrderService {
   public Orders OrderProducts(String key,Integer customerId,AddressDto Address) throws OrderException,CustomerException;
+  
+  public String cancelOrder(Integer orderId, String key, Integer customerId ) throws OrderException,CustomerException;
 }

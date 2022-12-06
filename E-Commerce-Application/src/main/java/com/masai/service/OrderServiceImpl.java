@@ -108,6 +108,56 @@ public class OrderServiceImpl implements OrderService{
         	
 	}
 	}
+
+	@Override
+	public String cancelOrder(Integer orderId, String key,Integer customerId) throws OrderException, CustomerException {
+		// TODO Auto-generated method stub
+		
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to create a Product");
+	        }
+	        
+	        if(customerId == loggedInUser.getUserId()) {
+	        	Orders order = odao.findById(orderId).get(); 
+	        	if(order ==  null) {
+	        	   throw new OrderException("order not found with id :"+orderId);
+	        	}
+	        	if(order.getOrderStatus().equals("Order Comfirmed")) {
+	        		
+	        	
+	        	Customer cust = custdao.findById(customerId).get();
+	        	
+	        	order.setOrderDate(LocalDate.now());
+	        	order.setOrderStatus("Order Cancelled");
+	        	 
+	        	List<ProductDtoSec> products = order.getProducts();
+	        	
+	        	for(ProductDtoSec p : products) {
+	        		Product pro = pdao.findById(p.getProductId()).get();
+	        		pro.setQunatity(pro.getQunatity()+p.getQuantity());
+	        		pdao.save(pro);
+	        	}
+	        	odao.save(order);
+	        
+	        	return "Order Cancelled Successfully";	
+	        	}else {
+	        		if(order.getOrderStatus().equals("Order Cancelled")) {
+	        		  return "Order Already Cancelled";
+	        		}else {
+	        			return "Something Went wrong Please Try Again";
+	        		}
+	        		
+	        	}
+	       
+	        }else {
+	        	throw new CustomerException("Wrong details please login first");
+	        }
+		
+	
+	}
+	
 	
 
 }
