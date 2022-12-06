@@ -161,6 +161,59 @@ public class CartServiceImpl implements CartService{
 	    	}
 			
 	}
+
+	@Override
+	public ProductDtoSec updateQuantity(Integer productId,Integer quantity, String key, Integer customerId)
+			throws CustomerException, CartException {
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to get all products");
+	        }
+	        
+	        if(customerId == loggedInUser.getUserId()) {
+	        	Customer cust = custdao.findById(customerId).get();
+	        	Cart cart = cust.getCart();
+	        	if(cart == null) {
+	        		throw new CartException("Please first add product to the cart");
+	        	}
+	        	List<ProductDtoSec> products = cart.getCartproducts();
+		           if(products.size() == 0) {
+		        	   throw new CartException("Please first add product to the cart");
+		           }
+		           
+		         Product product = pdao.findById(productId).get();
+		         if(product == null) {
+		        	 throw new CartException("product not found with id "+ productId);
+		         }
+		         ProductDtoSec prodto = null;
+		           for(int i =0;i<products.size();i++) {
+		        	   if(productId == products.get(i).getProductId()) {
+		        		  
+		        		   if(quantity>product.getQunatity() || quantity == 0) {
+		        			   throw new CartException("product out of Stock");
+		        		   }
+		        		   
+		        		   products.get(i).setQuantity(quantity);
+		        		   prodto = products.get(i);
+		        		   break;
+		        	   }
+		           }
+		           cart.setCartproducts(products);
+		           cdao.save(cart);
+		          
+	        	return prodto;
+	        	
+	        	
+	        	
+	        }else {
+	    		throw new CustomerException("wrong Details please login first!");
+	    	}
+		
+		
+	}
+	
+	
 	
 
 }

@@ -82,5 +82,11 @@ public class CustomerController {
 		
 	}
 	
+	@GetMapping("/updatingQuantity")
+	public ResponseEntity<ProductDtoSec> updateQuantityOfProduct(@RequestParam Integer productId,@RequestParam Integer quantity,@RequestParam String key,@RequestParam Integer CustomerId ) throws CustomerException,CartException{
+		ProductDtoSec productdto = cservice.updateQuantity(productId, quantity, key, CustomerId);
+		return new  ResponseEntity<ProductDtoSec>(productdto,HttpStatus.OK);
+	}
+	
 	
 }

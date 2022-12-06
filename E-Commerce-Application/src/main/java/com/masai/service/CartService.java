@@ -15,4 +15,5 @@ public interface CartService {
 	
     public String removeProductfromCart(Integer productId,String key,Integer customerId) throws CustomerException,CartException;
 	
+    public ProductDtoSec updateQuantity(Integer productId,Integer quantity,String key,Integer customerid) throws CustomerException,CartException;
 }
