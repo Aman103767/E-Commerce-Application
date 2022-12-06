@@ -79,4 +79,15 @@ http://localhost:8888/swagger-ui/
 | `POST` | `Create` | `http://localhost:8888/admin/create` | Create Admin |
 | `PUT` | `Update` | `http://localhost:8888/admin/update` | Update Admin |
 | `DELETE` | `Delete` | `http://localhost:8888/admin/delete` | Delete Admin |
+| `POST` | `Create Product` | `http://localhost:8888/admin/createProduct` | Create Product |
+| `GET` | `Get All Orders` | `http://localhost:8888/admin/getAllOrders` | Get All Orders |
+| `GET` | `Get All Product` | `http://localhost:8888/admin/getAllProduct` | Get All Product |
+| `GET` | `Get Product By Id` | `http://localhost:8888/admin/getProductById` | Get Product By Id |
+| `DELETE` | `Remove Product` | `http://localhost:8888/admin/removeProduct` | Remove Product |
+| `PUT` | `Update Product` | `http://localhost:8888/admin/updateProduct` | Update Product |
+| `GET` | `Find All Customer` | `http://localhost:8888/admin/findAllCustomer` | Find All Customer |
+| `GET` | `Find Customer By Id` | `http://localhost:8888/admin/findCustomerById` | Find Customer By Id |
+
+
+
 
