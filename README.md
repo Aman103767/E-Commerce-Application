@@ -58,13 +58,14 @@ http://localhost:8888/swagger-ui/
 | :-------- | :------- | :----- | :------------------------- |
 | `POST` | `Create` | `http://localhost:8888/customer/create` | Create Customer |
 | `PUT` | `Update` | `http://localhost:8888/customer/update` | Update Customer |
-| `DELETE` | `Delete` | `http://localhost:8888/customer/delete` | Delete Customer |
-| `POST` | `Book Trip` | `http://localhost:8888/customer/booktriping` | Book Trip |
-| `DELETE` | `Cancel Trip` | `http://localhost:8888/customer/canceltrip` | Cancel Trip |
-| `POST` | `Trip List` | `http://localhost:8888/customer/triplist` | Trip List |
-| `POST` | `Generate Bill` | `http://localhost:8888/customer/generateBill` | Generate Bill |
-| `GET`  |  `View All Customer` | `http://localhost:8888/customer/viewAll`| View All Customer|
-| `GET`  |  `View Customer` | `http://localhost:8888/customer/viewAll`| View Customer|
+| `GET` | `Add To Cart` | `http://localhost:8888/customer/addToCart` | Add To Cart |
+| `GET` | `Update Quantity` | `http://localhost:8888/customer/updatingQuantity` | Update Quantity Of Product |
+| `GET` | `Get All Product` | `http://localhost:8888/customer/getAllProductAddedInCart` | Get All Product Added In Cart |
+| `DELETE` | `Remove Product From Cart` | `http://localhost:8888/customer/removeProductFromCart` | Remove Product From Cart |
+| `DELETE` | `Remove All Product From Cart` | `http://localhost:8888/customer/removeAllProductfromCart` | Remove All Product From Cart |
+| `POST` | `Order Product` | `http://localhost:8888/customer/orderProduct` | Order |
+| `GET` | `Get Order By Id` | `http://localhost:8888/customer/getOrderById` | Get Order By Id |
+| `DELETE` | `Cancel Order` | `http://localhost:8888/customer/cancelOrder` | Cancel Order |
 
 
 ## Admin Requests
@@ -78,8 +79,4 @@ http://localhost:8888/swagger-ui/
 | `POST` | `Create` | `http://localhost:8888/admin/create` | Create Admin |
 | `PUT` | `Update` | `http://localhost:8888/admin/update` | Update Admin |
 | `DELETE` | `Delete` | `http://localhost:8888/admin/delete` | Delete Admin |
-| `POST` | `Get All Trip` | `http://localhost:8888/admin/getalltrips` | Show All Trip |
-| `GET` | `Get Trip By Cab` | `http://localhost:8888/admin/getalltripsbycab/{cabId}` | Get All Trip By Cab ID |
-
-
 
