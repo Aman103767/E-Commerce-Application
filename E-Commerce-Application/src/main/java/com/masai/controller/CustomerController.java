@@ -20,6 +20,7 @@ import com.masai.exceptions.CartException;
 import com.masai.exceptions.CustomerException;
 import com.masai.exceptions.OrderException;
 import com.masai.model.AddressDto;
+import com.masai.model.Cart;
 import com.masai.model.Customer;
 import com.masai.model.CustomerDTO;
 import com.masai.model.Product;
@@ -86,6 +87,12 @@ public class CustomerController {
 	public ResponseEntity<ProductDtoSec> updateQuantityOfProduct(@RequestParam Integer productId,@RequestParam Integer quantity,@RequestParam String key,@RequestParam Integer CustomerId ) throws CustomerException,CartException{
 		ProductDtoSec productdto = cservice.updateQuantity(productId, quantity, key, CustomerId);
 		return new  ResponseEntity<ProductDtoSec>(productdto,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/removeAllProductfromCart")
+	public ResponseEntity<Cart> removeAllProduct(@RequestParam String key,@RequestParam Integer customerId) throws CustomerException, CartException {
+		Cart cart = cservice.removeAllProduct(key, customerId);
+		return new  ResponseEntity<Cart>(cart,HttpStatus.OK);
 	}
 	
 	

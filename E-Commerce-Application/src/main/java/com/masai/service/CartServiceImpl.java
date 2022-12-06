@@ -26,7 +26,7 @@ public class CartServiceImpl implements CartService{
 	@Autowired
 	private ProductDao pdao;
    @Autowired
-	private CartDao cdao;
+	private CartDao cartdao;
    @Autowired
    private CustomerDao custdao;
    @Autowired
@@ -87,7 +87,7 @@ public class CartServiceImpl implements CartService{
 		    
 		    
 		}
-		cdao.save(c1);
+		cartdao.save(c1);
 		
 		return "Product added to the cart";
 	}
@@ -115,9 +115,12 @@ public class CartServiceImpl implements CartService{
         if(CustomerId == loggedInUser.getUserId()) {
        
 		// TODO Auto-generated method stub
-	Optional<Cart> c = 	cdao.findById(cartId);
+	Optional<Cart> c = 	cartdao.findById(cartId);
 		if(c.isPresent()) {
 			Cart cart =c.get();
+			if(cart.getCartproducts().size() == 0) {
+				throw  new CartException("Cart is Empty");
+			}
 			return cart.getCartproducts();
 		}
 		throw new CartException("Cartid not found with "+cartId);
@@ -153,7 +156,7 @@ public class CartServiceImpl implements CartService{
 	        	   }
 	           }
 	           cart.setCartproducts(products);
-	           cdao.save(cart);
+	           cartdao.save(cart);
 	           return "Product removed from the cart successfully";
 	           
 	        }else {
@@ -200,7 +203,7 @@ public class CartServiceImpl implements CartService{
 		        	   }
 		           }
 		           cart.setCartproducts(products);
-		           cdao.save(cart);
+		           cartdao.save(cart);
 		          
 	        	return prodto;
 	        	
@@ -212,6 +215,38 @@ public class CartServiceImpl implements CartService{
 		
 		
 	}
+
+	@SuppressWarnings("unused")
+	@Override
+	public Cart removeAllProduct(String key, Integer customerId) throws CustomerException, CartException {
+		// TODO Auto-generated method stub
+		 CurrentUserSession loggedInUser = sessionDao.findByUuid(key);
+	        
+	        if(loggedInUser == null) {
+	        	throw new CustomerException("Please provide a valid key to get all products");
+	        }
+	        
+	        if(customerId == loggedInUser.getUserId()) {
+	        	Customer cust = custdao.findById(customerId).get();
+	        	Cart cart = cust.getCart();
+	        	if(cust == null) {
+	        		throw new CartException("please add product to the cart first!");
+	        	}
+	        	List<ProductDtoSec> products = cart.getCartproducts();
+		           if(products.size() == 0) {
+		        	   throw new CartException("Please first add product to the cart");
+		           }
+		           
+		           cart.setCartproducts(new ArrayList<>());
+		           return cartdao.save(cart);
+		           
+	        	
+	        }else {
+	        	throw new CustomerException("wrong Details please login first!");
+	        }
+			
+	}
+	
 	
 	
 	
