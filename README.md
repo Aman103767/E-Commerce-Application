@@ -88,6 +88,23 @@ http://localhost:8888/swagger-ui/
 | `GET` | `Find All Customer` | `http://localhost:8888/admin/findAllCustomer` | Find All Customer |
 | `GET` | `Find Customer By Id` | `http://localhost:8888/admin/findCustomerById` | Find Customer By Id |
 
+## Login Requests
+
+```http
+  Admin Login
+```
+| Request | METHOD     |  URI | Description                |
+| :-------- | :------- | :----- | :------------------------- |
+| `POST` | `Login` | `http://localhost:8888/loginAdmin` | Login Admin |
+| `GET` | `Logout` | `http://localhost:8888/logoutAdmin` | Logout Admin |
+
+```http
+   Customer Login
+```
+| Request | METHOD     |  URI | Description                |
+| :-------- | :------- | :----- | :------------------------- |
+| `POST` | `Login` | `http://localhost:8888/loginCustomer` | Login Customer |
+| `GET` | `Logout` | `http://localhost:8888/logoutCustomer` | Logout Customer |
 
 
 
