@@ -53,7 +53,7 @@ This is a Individual project, I have built a rest API service for an Online Shop
 # API Root Endpoint
 ```
 https://localhost:8888/
- ```
+```
 ```
 http://localhost:8888/swagger-ui/
 ```
