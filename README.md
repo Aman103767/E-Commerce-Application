@@ -2,6 +2,7 @@
 This is a Individual project, I have built a rest API service for an Online Shopping Application which can be used by customers to login into their profile, update their information and Add the product to the cart and order them. All this is over looked by the admin who can also login and update their information as well as access the data in the Admin Module. 
 
 ### Database Schema
+
 ![Untitled](https://user-images.githubusercontent.com/54835356/205990063-0019a1a9-434c-4b1a-8e43-bbfd83f3aa8c.png)
 
 # Tech Stack
