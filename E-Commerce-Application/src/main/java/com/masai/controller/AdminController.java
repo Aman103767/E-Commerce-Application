@@ -56,7 +56,6 @@ public class AdminController {
 		
 		Admin savedAdmin = AService.createAdmin(admin);
 		
-		
 		return new ResponseEntity<Admin>(savedAdmin,HttpStatus.CREATED);
 	}
 	
