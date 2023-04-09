@@ -96,6 +96,7 @@ public class AdminController {
 	public ResponseEntity<Product> createProduct(@RequestBody ProductDTO product ,@RequestParam Integer adminId ,@RequestParam String key) throws AdminException {
 		Product p = pService.createProduct(product,key,adminId);
 		return new ResponseEntity<Product>(p,HttpStatus.OK);
+		
 	}
 	
     @DeleteMapping("/removeProduct")
