@@ -237,7 +237,6 @@ public class CartServiceImpl implements CartService{
 		           
 		           cart.setCartproducts(new ArrayList<>());
 		           return cartdao.save(cart);
-		           
 	        }else {
 	        	throw new CustomerException("wrong Details please login first!");
 	        }
