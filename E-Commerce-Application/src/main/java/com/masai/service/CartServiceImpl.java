@@ -39,7 +39,6 @@ public class CartServiceImpl implements CartService{
 		  if(loggedInUser == null) {
 	        	throw new CustomerException("Please provide a valid key to get all products");
 	        }
-	        
 	        if(customerId == loggedInUser.getUserId()) {
 	        	
 //	          Optional<Product> pro = pdao.findById(productId);
