@@ -73,7 +73,6 @@ public class CartServiceImpl implements CartService{
 		}
 	     
 	          
-		
 		c1.getCartproducts().add(prodto2);
 		}
 		else {
