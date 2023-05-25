@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartService{
 		}
 		cartdao.save(c1);
 		
-		return "Product added to the cart";
+		return "Product added in the cart";
 	}
 		
 	      throw new CartException("Customerid or productid not found");
