@@ -15,6 +15,8 @@ This is a Individual project, I have built a rest API service for an Online Shop
 - MySQL
 - Swagger UI
 - Maven
+- JWT authentication
+- Criteria Query
 
 # Modules
 
