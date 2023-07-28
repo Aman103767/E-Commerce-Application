@@ -122,6 +122,15 @@ http://localhost:8888/swagger-ui/
 | `POST` | `Order Product` | `http://localhost:8888/customer/orderProduct` | Order |
 | `GET` | `Get Order By Id` | `http://localhost:8888/customer/getOrderById` | Get Order By Id |
 | `DELETE` | `Cancel Order` | `http://localhost:8888/customer/cancelOrder` | Cancel Order |
+| `GET` | `Get All Product` | `http://localhost:8888/customer/getAllProduct` | Product Admin Upload |
+| `GET` | `Get All Order` | `http://localhost:8888/customer/getAllOrdersByCustomer` | Get All Order |
+| `GET` | `Add review` | `http://localhost:8888/customer/review` | Add review |
+| `GET` | `Get review` | `http://localhost:8888/customer/review` | Get review |
+
+
+
+
+
 
 
 
