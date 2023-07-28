@@ -65,22 +65,13 @@ http://localhost:8888/swagger-ui/
 
 
 ## Login Requests
-
 ```http
-  Admin Login
+   Customer And Admin Login
 ```
 | Request | METHOD     |  URI | Description                |
 | :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/loginAdmin` | Login Admin |
-| `GET` | `Logout` | `http://localhost:8888/logoutAdmin` | Logout Admin |
-
-```http
-   Customer Login
-```
-| Request | METHOD     |  URI | Description                |
-| :-------- | :------- | :----- | :------------------------- |
-| `POST` | `Login` | `http://localhost:8888/loginCustomer` | Login Customer |
-| `GET` | `Logout` | `http://localhost:8888/logoutCustomer` | Logout Customer |
+| `POST` | `Login` | `http://localhost:8888/login` | Login Customer or Admin |
+| `POST` | `Current User` | `http://localhost:8888//current-user` | Current User |
 
 
 ## Admin Requests
@@ -94,12 +85,10 @@ http://localhost:8888/swagger-ui/
 | `POST` | `Create` | `http://localhost:8888/admin/create` | Create Admin |
 | `PUT` | `Update` | `http://localhost:8888/admin/update` | Update Admin |
 | `DELETE` | `Delete` | `http://localhost:8888/admin/delete` | Delete Admin |
-| `POST` | `Create Product` | `http://localhost:8888/admin/createProduct` | Create Product |
 | `GET` | `Get All Orders` | `http://localhost:8888/admin/getAllOrders` | Get All Orders |
 | `GET` | `Get All Product` | `http://localhost:8888/admin/getAllProduct` | Get All Product |
 | `GET` | `Get Product By Id` | `http://localhost:8888/admin/getProductById` | Get Product By Id |
 | `DELETE` | `Remove Product` | `http://localhost:8888/admin/removeProduct` | Remove Product |
-| `PUT` | `Update Product` | `http://localhost:8888/admin/updateProduct` | Update Product |
 | `GET` | `Find All Customer` | `http://localhost:8888/admin/findAllCustomer` | Find All Customer |
 | `GET` | `Find Customer By Id` | `http://localhost:8888/admin/findCustomerById` | Find Customer By Id |
 
@@ -124,8 +113,62 @@ http://localhost:8888/swagger-ui/
 | `DELETE` | `Cancel Order` | `http://localhost:8888/customer/cancelOrder` | Cancel Order |
 | `GET` | `Get All Product` | `http://localhost:8888/customer/getAllProduct` | Product Admin Upload |
 | `GET` | `Get All Order` | `http://localhost:8888/customer/getAllOrdersByCustomer` | Get All Order |
-| `GET` | `Add review` | `http://localhost:8888/customer/review` | Add review |
-| `GET` | `Get review` | `http://localhost:8888/customer/review` | Get review |
+| `GET` | `Add review` | `http://localhost:8888/customer/review` | Add review admin |
+| `GET` | `Get review` | `http://localhost:8888/customer/review` | Get review admin|
+
+
+## Order Requests
+
+```http
+  Order Controller
+```
+
+
+| Request | METHOD     |  URI | Description                |
+| :-------- | :------- | :----- | :------------------------- |
+| `GET` | `Create` | `http://localhost:8888/order/orderProduct` | Order Product |
+| `GET` | `Get` | `http://localhost:8888/order/getOrderById` | Get Order |
+
+## Product Requests
+
+```http
+  Product Controller
+```
+
+
+| Request | METHOD     |  URI | Description                |
+| :-------- | :------- | :----- | :------------------------- |
+| `POST` | `Create Product` | `http://localhost:8888/admin/createProduct` | Create Product |
+| `PUT` | `Update Product` | `http://localhost:8888/admin/updateProduct` | Update Product |
+| `GET` | `Get Products` | `http://localhost:8888/product/pagination` | Get Products |
+| `POST` | `Post Product` | `http://localhost:8888/product/pagination` | Post Products |
+| `GET` | `Add review` | `http://localhost:8888/product/review` | Add and Update Review Product |
+| `GET` | `Get review` | `http://localhost:8888/product/review` | Get Review Product|
+| `GET` | `Get All review` | `http://localhost:8888/product/review` | Get All Review Product|
+| `GET` | `Add helpfull Count` | `http://localhost:8888/product/addReviewCount` | Get Count Helpfull Product|
+
+
+## Address Requests
+
+```http
+  Address Controller
+```
+
+
+| Request | METHOD     |  URI | Description                |
+| :-------- | :------- | :----- | :------------------------- |
+| `POST` | `Create Address` | `http://localhost:8888/address/add` | Create Address |
+| `GET` | `Get All Address` | `http://localhost:8888/address/getAllAddress` | Get All Address |
+| `GET` | `Get Address` | `http://localhost:8888/address/getById` | Get Address |
+| `Delete` | `Delete Address` | `http://localhost:8888/address/deleteById` | Delete Address |
+| `GET` | `Set Default Address` | `http://localhost:8888/address/setDefault` | Set Default Address |
+
+
+
+
+
+
+
 
 
 
