@@ -3,7 +3,7 @@ This is a Individual project, I have built a rest API service for an Online Shop
 
 ### Database Schema
 
-![Untitled](https://github.com/Aman103767/E-Commerce-Application/assets/54835356/eca05e9c-f983-40eb-9252-d7ef627ef6ff)
+![Untitled (1)](https://github.com/Aman103767/E-Commerce-Application/assets/54835356/ac2d2320-46fe-4017-9f03-18b81e654a5d)
 
 
 # Tech Stack
