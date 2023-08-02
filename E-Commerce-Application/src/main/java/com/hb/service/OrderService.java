@@ -11,7 +11,7 @@ import com.hb.models.ProductDtoSec;
 
 
 public interface OrderService {
-  public Orders OrderProducts(Integer customerId,AddressDto Address) throws OrderException,CustomerException;
+  public Orders OrderProducts(Integer customerId) throws OrderException,CustomerException;
   
   public String cancelOrder(Integer orderId ) throws OrderException,CustomerException;
   

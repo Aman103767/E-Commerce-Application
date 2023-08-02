@@ -25,11 +25,9 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@PostMapping("/orderProduct/{customerId}")
-	public ResponseEntity<Orders> Order(@PathVariable Integer customerId,@RequestBody AddressDto addDto) throws OrderException, CustomerException{
-		
-		Orders order = orderService.OrderProducts(customerId,addDto);
-		
+	@GetMapping("/orderProduct/{customerId}")
+	public ResponseEntity<Orders> Order(@PathVariable Integer customerId) throws OrderException, CustomerException{
+		Orders order = orderService.OrderProducts(customerId);
 		return new  ResponseEntity<Orders>(order,HttpStatus.OK);
 	}
 	@GetMapping("/getOrderById/{orderId}")

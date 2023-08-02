@@ -9,15 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.hb.controller.LoginController;
 import com.hb.exceptions.CustomerException;
+import com.hb.exceptions.ProductException;
 import com.hb.models.Address;
 import com.hb.models.AddressDto;
 import com.hb.models.Customer;
 import com.hb.models.CustomerDTO;
 import com.hb.models.Orders;
+import com.hb.models.Product;
+import com.hb.models.ProductDtoSec;
+import com.hb.models.Reviews;
 import com.hb.repository.AddressDao;
 import com.hb.repository.CartDao;
 import com.hb.repository.CustomerDao;
 import com.hb.repository.OrderDao;
+import com.hb.repository.ProductDao;
+import com.hb.repository.ReviewDao;
 import com.hb.security.JwtAuthResponse;
 
 
@@ -38,6 +44,12 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Autowired
 	private BCryptPasswordEncoder bcript;
+	
+	@Autowired
+	private ProductDao productDao;
+	
+	@Autowired
+	private ReviewDao reviewDao;
 
 	@Override
 	public Customer createCustomer(CustomerDTO customer) throws CustomerException {
@@ -259,6 +271,75 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		custDao.save(customer);
 		return "default is set";
+	}
+
+
+	@Override
+	public Reviews addReviewToProductAdmin(Integer customerId, Integer productId, Integer orderId, Reviews review) throws CustomerException, ProductException {
+		// TODO Auto-generated method stub
+		Orders order = orderDao.findById(orderId).orElseThrow(()-> new ProductException("order not found"));
+		Customer customer = custDao.findById(customerId).orElseThrow(()-> new CustomerException("custome not found please login first"));
+		
+		if(review != null) {
+			Product product = productDao.findById(productId).orElseThrow(()-> new CustomerException("admin of product not found"));
+			Customer admin = product.getAdmin();
+			if(admin != null && review.getReviewId() == null) {
+				review.setCustomerId(admin.getCustomerId());
+				review.setOrderId(order.getOrderId());
+				reviewDao.save(review);
+				admin.getReviews().add(review);		
+				custDao.save(admin);
+			}else if(admin != null) {
+				Reviews productReview = reviewDao.findById(review.getReviewId()).get();
+				
+//				productReview.setCountHelpful(review.getCountHelpful());
+				productReview.setHeadline(review.getHeadline());
+				productReview.setRating(review.getRating());
+				productReview.setCustomerId(customer.getCustomerId());
+				productReview.setOrderId(order.getOrderId());
+				productReview.setReviewMessage(review.getReviewMessage());
+	            for(Reviews rew : admin.getReviews()) {
+	            	if(rew.getReviewId() == review.getReviewId()) {
+	            		rew = productReview;
+	            		break;
+	            	}
+	            }
+	            reviewDao.save(review);
+	            custDao.save(admin);
+			}
+		}
+		if(review == null) {
+			throw new CustomerException("please add the reviews");
+		}
+		return review;
+	}
+
+	@Override
+	public Reviews getReview(Integer productId, Integer customerId, Integer orderId) throws CustomerException, ProductException {
+		// TODO Auto-generated method stub
+		Customer customer = custDao.findById(customerId).orElseThrow(()-> new CustomerException("custome not found please login first"));
+		Product product = productDao.findById(productId).orElseThrow(()-> new CustomerException("admin of product not found"));
+		Reviews adminReview = null;
+		boolean flag = false;
+		if(product.getAdmin() != null) {
+			Customer admin = product.getAdmin();
+			for(Reviews review : admin.getReviews()) {
+				if(review.getOrderId() == orderId) {
+					Orders order = orderDao.findById(review.getOrderId()).orElseThrow(()-> new ProductException("order not found"));
+					for(ProductDtoSec productSec: order.getProducts()) {
+						if(productSec.getProductId() == productId) {
+							adminReview = review;
+							flag = true;
+							break;
+						}
+					}
+					if(flag) {
+						break;
+					}
+				}
+			}
+		}
+		return adminReview;
 	}
 
 

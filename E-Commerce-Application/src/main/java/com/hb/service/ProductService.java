@@ -9,6 +9,8 @@ import com.hb.exceptions.CustomerException;
 import com.hb.exceptions.ProductException;
 import com.hb.models.Product;
 import com.hb.models.ProductDTO;
+import com.hb.models.ReviewTo;
+import com.hb.models.Reviews;
 
 public interface ProductService {
 
@@ -29,6 +31,14 @@ public interface ProductService {
 	public Page<Product> findProductWithPagination(int offset, int pageSize) ;
 	
 	public List<Product> searchProductByName(String name) throws ProductException;
+	
+	public Reviews addAndUpdateReview(Integer productId, Integer customerId, Integer orderId, Reviews review) throws ProductException, CustomerException;
+	
+	public Reviews getReview(Integer productId, Integer custmerId, Integer orderId) throws ProductException, CustomerException;
+	
+	public List<ReviewTo> getAllReview(Integer productId) throws ProductException;
+	
+	public Reviews addHelpfullCount(Integer reviewId, Integer customerId) throws ProductException, CustomerException;
 	
 
 

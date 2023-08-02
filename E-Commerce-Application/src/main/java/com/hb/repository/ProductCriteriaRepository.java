@@ -84,13 +84,19 @@ public class ProductCriteriaRepository {
                  criteriaBuilder.like(criteriaBuilder.upper(productRoot.get("specification")),"%"+productSearchCritaria.getProduct().getSpecification()+"%")
                  
                 ));
-			
-			
+
+
 //			predicates.add(
 //			criteriaBuilder.like(productRoot.get("productName"),"%"+productSearchCritaria.getProduct().getProductName()+"%")
-		
-	        
+		    // Filter by price range (minPrice and maxPrice)
 		}
+		if (Objects.nonNull(productSearchCritaria.getMinPrice()) && Objects.nonNull(productSearchCritaria.getMaxPrice())) {
+			Double minPrice = productSearchCritaria.getMinPrice();
+			Double maxPrice = productSearchCritaria.getMaxPrice();
+			predicates.add(criteriaBuilder.between(productRoot.get("price"), minPrice, maxPrice));
+		}
+
+		
 		return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 	}
 	

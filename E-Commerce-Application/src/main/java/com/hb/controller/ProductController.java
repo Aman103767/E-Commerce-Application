@@ -1,5 +1,8 @@
 package com.hb.controller;
 
+import java.util.List;
+
+
 import javax.validation.Valid;  
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ import com.hb.models.Product;
 import com.hb.models.ProductDTO;
 import com.hb.models.ProductPage;
 import com.hb.models.ProductSearchCritaria;
+import com.hb.models.ReviewTo;
+import com.hb.models.Reviews;
+import com.hb.models.Reviews_;
 import com.hb.service.AdminService;
 import com.hb.service.CustomerService;
 import com.hb.service.OrderService;
@@ -33,6 +39,8 @@ import com.hb.service.ProductService;
 import com.hb.service.ProductServiceImpl;
 import com.hb.validations.CustomerValidation;
 import com.hb.validations.ProductValidation;
+
+import net.bytebuddy.asm.MemberSubstitution.Substitution.Chain.Step.Resolution;
 
 @RestController
 @RequestMapping(value = "/product")
@@ -55,11 +63,11 @@ public class ProductController {
 	@Autowired
 	ProductValidation validator;
 	
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//    	binder.setValidator(validator);
-//    }
-//	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+    	binder.setValidator(validator);
+    }
+
 	
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
@@ -124,12 +132,19 @@ public class ProductController {
 	    		Double price = Double.parseDouble(paginationDTO.getName());
 	    		productSearchCritaria.getProduct().setPrice(price);
 	    	}
-	    	;
-	    	 productSearchCritaria.getProduct().setProductName(paginationDTO.getName());
+	    	productSearchCritaria.getProduct().setProductName(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().getCategory().setCategoryName(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().setDimension(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().setManufacturer(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().setSpecification(paginationDTO.getName());
+	    }
+	    if (paginationDTO.getMinAmount() != null) {
+	        Double minAmount = paginationDTO.getMinAmount();
+	        productSearchCritaria.setMinPrice(minAmount);
+	    }
+	    if (paginationDTO.getMaxAmount() != null) {
+	        Double maxAmount = paginationDTO.getMaxAmount();
+	        productSearchCritaria.setMaxPrice(maxAmount);
 	    }
 		
 		return new ResponseEntity<>(productServiceImpl.getProduct(productPage, productSearchCritaria),HttpStatus.OK);
@@ -143,5 +158,25 @@ public class ProductController {
 	    return true;
 	}
 	
+	@PostMapping("review/{customerId}/{productId}/{orderId}")
+	public ResponseEntity<Reviews> addAndUpdateReview(@PathVariable Integer productId, @PathVariable Integer customerId, @PathVariable Integer orderId, @RequestBody Reviews review) throws ProductException, CustomerException {
+		Reviews reviews = pService.addAndUpdateReview(productId, customerId,orderId, review);
+		return new ResponseEntity<>(reviews,HttpStatus.OK);
+	}
+	@GetMapping("review/{customerId}/{productId}/{orderId}")
+	public ResponseEntity<Reviews> getReview(@PathVariable Integer productId, @PathVariable Integer customerId , @PathVariable Integer orderId) throws ProductException, CustomerException{
+		Reviews reviews = pService.getReview(productId, customerId, orderId);
+		return new ResponseEntity<Reviews>(reviews,HttpStatus.OK);
+	}
+	@GetMapping("getAllReview/{productId}")
+	public ResponseEntity<List<ReviewTo>> getReview(@PathVariable Integer productId) throws ProductException{
+		List<ReviewTo> reviews = pService.getAllReview(productId);
+		return new ResponseEntity<List<ReviewTo>>(reviews,HttpStatus.OK);
+	}
+	@GetMapping("addReviewCount/{reviewId}/{customerId}")
+	public ResponseEntity<Reviews> addHelpfullReview(@PathVariable Integer reviewId, @PathVariable Integer customerId) throws ProductException, CustomerException{
+		Reviews reviews = pService.addHelpfullCount(reviewId,customerId);
+		return new ResponseEntity<Reviews>(reviews,HttpStatus.OK);
+	}
 	
 }

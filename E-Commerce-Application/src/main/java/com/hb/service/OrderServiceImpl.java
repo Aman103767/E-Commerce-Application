@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@SuppressWarnings("unused")
 	@Override
-	public Orders OrderProducts(Integer customerId,AddressDto address) throws OrderException, CustomerException {
+	public Orders OrderProducts(Integer customerId) throws OrderException, CustomerException {
 		// TODO Auto-generated method stub
 		Optional<Customer> OptionalCust = custdao.findById(customerId);
 		Integer totalAmount = 0;
@@ -58,34 +58,16 @@ public class OrderServiceImpl implements OrderService{
 			}
 			Orders order = new Orders();
 			Customer cust = cart.getCustomer();
-			Address add = new Address();
-			if(address != null) {
-			add.setBuildingNo(address.getBuildingNo());
-			add.setCity(address.getCity());
-			add.setName(address.getName());
-			add.setCountry(address.getCountry());
-			add.setPincode(address.getPincode());
-			add.setState(address.getState());
-			add.setMobileNumber(address.getMobileNumber());
-			add.setAddress(address.getAddress());
-			}
-			if(address != null && cust.getAddresses().size() == 0) {
-				add.setSetDefault(true);
-				cust.getAddresses().add(add);
-				order.setAddress(cust.getAddresses().get(0));
-			}else {
 				List<Address> addresses = cust.getAddresses();
+				if(cust.getAddresses() == null || cust.getAddresses().size() == 0) {
+					throw new OrderException("Please add address there is no addresss for this customer");
+				}
 				for(Address  i : addresses) {
 					if(i.isSetDefault() == true) {
 						order.setAddress(i);
-					}
-				}
 			}
-			add = addressDao.save(add);
-			// cust.setAddress(add);
+				}
 			custdao.save(cust);
-
-			//order.setAddress(cust.getAddress());
 			order.setOrderDate(LocalDate.now());
 			order.setCustomer(cust);
 			List<ProductDtoSec> products= new ArrayList<>();
@@ -108,9 +90,6 @@ public class OrderServiceImpl implements OrderService{
 			return order;
 		}
 		throw new OrderException("Customer not found with id "+OptionalCust.get().getCustomerId());
-
-
-
 	}
 
 	@Override

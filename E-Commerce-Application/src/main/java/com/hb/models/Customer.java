@@ -34,7 +34,7 @@ public class Customer extends User{
 	@JsonIgnore
     private Cart cart;
 	
-
-
+	@OneToMany(cascade = CascadeType.ALL)
+	List<Reviews> reviews = new ArrayList<>();
 
 }

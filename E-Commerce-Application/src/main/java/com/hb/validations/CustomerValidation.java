@@ -25,7 +25,8 @@ public class CustomerValidation implements Validator {
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
-	  return CustomerDTO.class.equals(clazz);
+		
+	  return true;
 	}
 
 	@Override

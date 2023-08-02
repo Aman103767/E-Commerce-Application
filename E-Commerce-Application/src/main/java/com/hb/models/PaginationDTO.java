@@ -9,5 +9,7 @@ public class PaginationDTO {
    private String name;
    private String sortBy;
    private boolean direction;
+   private Double minAmount;
+   private Double maxAmount;
  
 }

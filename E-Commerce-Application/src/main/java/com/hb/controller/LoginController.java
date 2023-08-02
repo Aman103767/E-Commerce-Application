@@ -59,7 +59,6 @@ public class LoginController {
     private CustomerDao custDao;
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody LoginForm request) throws Exception {
-    	System.out.println("aman");
         this.authenticate(request.getUsername(),request.getPassword());
         UserDetails userDetails=this.userDetailsService.loadUserByUsername(request.getUsername());
         String token=this.jwtTokenHelper.generateTokens(userDetails);

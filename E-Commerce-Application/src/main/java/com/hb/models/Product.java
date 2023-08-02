@@ -70,9 +70,6 @@ public class Product {
 	@Column(name ="avg_Rating")
 	private Integer avgRating;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private Customer adminDetails; 
-	
 	@ElementCollection
 	@Column(name = "about_item")
 	private List<String> aboutItem;

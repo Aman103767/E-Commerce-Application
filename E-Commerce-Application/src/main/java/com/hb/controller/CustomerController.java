@@ -38,6 +38,7 @@ import com.hb.models.CustomerDTO;
 import com.hb.models.Orders;
 import com.hb.models.Product;
 import com.hb.models.ProductDtoSec;
+import com.hb.models.Reviews;
 import com.hb.security.JwtAuthResponse;
 import com.hb.service.CartService;
 import com.hb.service.CustomerService;
@@ -46,7 +47,7 @@ import com.hb.service.ProductService;
 import com.hb.validations.CustomerValidation;
 
 @RestController
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomerController {
 	
@@ -54,7 +55,7 @@ public class CustomerController {
 	CustomerService custService;
     
     @Autowired
-	CartService cservice;
+	CartService cservice;	
     
 	@Autowired
 	OrderService orderService;
@@ -155,6 +156,16 @@ public class CustomerController {
 	public ResponseEntity<List<Orders>> getAllOrders(@PathVariable Integer customerId) throws OrderException, CustomerException {
 		List<Orders> orders = orderService.getAllOrdersByCustomer(customerId);
 		return new ResponseEntity<List<Orders>>(orders,HttpStatus.OK);
+	}
+	@PostMapping("/review/{customerId}/{productId}/{orderId}")
+	public ResponseEntity<Reviews> addReviewToproductAdmin(@PathVariable Integer customerId, @PathVariable Integer productId,@PathVariable Integer orderId, @RequestBody Reviews review) throws CustomerException, ProductException{
+	    Reviews adminReview = custService.addReviewToProductAdmin(customerId, productId,orderId, review);
+	    return new ResponseEntity<>(adminReview,HttpStatus.OK);
+	}
+	@GetMapping("review/{customerId}/{productId}/{orderId}")
+	public ResponseEntity<Reviews> getReview(@PathVariable Integer productId, @PathVariable Integer customerId , @PathVariable Integer orderId) throws ProductException, CustomerException{
+		Reviews reviews = custService.getReview(productId, customerId, orderId);
+		return new ResponseEntity<Reviews>(reviews,HttpStatus.OK);
 	}
 
 

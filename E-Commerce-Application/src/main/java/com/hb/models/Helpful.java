@@ -1,9 +1,8 @@
-	package com.hb.models;
+package com.hb.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,18 +14,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Cart {
+public class Helpful {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer cartId;
- @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")	  
- private Customer customer;
- 
- @OneToMany(cascade = CascadeType.ALL)
- private List<ProductDtoSec> Cartproducts = new ArrayList<>();
+	private Integer id; 
+	Integer count;
+	
+	@OneToMany
+	List<Customer> customers = new ArrayList<>();
 
 }
