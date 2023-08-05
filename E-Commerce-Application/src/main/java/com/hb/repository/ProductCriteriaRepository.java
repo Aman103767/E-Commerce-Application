@@ -70,7 +70,6 @@ public class ProductCriteriaRepository {
 		}else {
 			criteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get(productPage.getSortBy())));
 		}
-		
 	}
 	private Predicate getPredicate(ProductSearchCritaria productSearchCritaria, 
 			Root<Product> productRoot) {
@@ -84,8 +83,6 @@ public class ProductCriteriaRepository {
                  criteriaBuilder.like(criteriaBuilder.upper(productRoot.get("specification")),"%"+productSearchCritaria.getProduct().getSpecification()+"%")
                  
                 ));
-
-
 //			predicates.add(
 //			criteriaBuilder.like(productRoot.get("productName"),"%"+productSearchCritaria.getProduct().getProductName()+"%")
 		    // Filter by price range (minPrice and maxPrice)
@@ -93,7 +90,7 @@ public class ProductCriteriaRepository {
 		if (Objects.nonNull(productSearchCritaria.getMinPrice()) && Objects.nonNull(productSearchCritaria.getMaxPrice())) {
 			Double minPrice = productSearchCritaria.getMinPrice();
 			Double maxPrice = productSearchCritaria.getMaxPrice();
-			predicates.add(criteriaBuilder.between(productRoot.get("price"), minPrice, maxPrice));
+			predicates.add(criteriaBuilder.between(productRoot.get("discountedPrice"), minPrice, maxPrice));
 		}
 
 		

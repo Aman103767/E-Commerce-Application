@@ -73,47 +73,37 @@ public class ProductServiceImpl implements ProductService {
 		p.setAboutItem(product.getAboutItem());
 		p.setDiscountPercentage(product.getDiscountPercentage());
 		p.setInDeliveryDays(product.getInDeliveryDays());
+		if(product.getDiscountPercentage() != null){
+			p.setDiscountedPrice(product.getPrice() - (product.getPrice()*product.getDiscountPercentage())/100);
+		}else {
+			p.setDiscountedPrice(product.getPrice());
+		}
 		p.setAdmin(admin);
 		Category c = new Category();
 		c.setCategoryName(product.getCategoryName());
 		p.setCategory(c);
 		c.getProducts().add(p);
-	
-		
 		pdao.save(p);
-		
 		return p;
-	
-        
-	
-
 	}
 
 	@Override
 	public String removeProduct(Integer productId) throws ProductException {
-		// TODO Auto-generated method stub
-		
-	        
-	       
-	         Product product =  pdao.findById(productId).orElseThrow(()->new ProductException("product does not exist with id: "+ productId));
-	          	
-	        pdao.delete(product);
-	        return "Product is remove successfully";
-	           
-	  
+		Product product =  pdao.findById(productId).orElseThrow(()->new ProductException("product does not exist with id: "+ productId));
+		pdao.delete(product);
+		return "Product is remove successfully";
 	}
 
 	@Override
 	public Product updateProduct(ProductDTO product,Integer productId) throws ProductException {
 		// TODO Auto-generated method stub
-		
-	       
 			Optional<Product> p1 = pdao.findById(productId);
 			if(p1.isPresent() == false) {
 				throw new ProductException("Product not found with id :"+ product.getProductId());
 			}
 			Product p = p1.get();
 			p.setProductName(product.getProductName());
+			p.setMainImg(product.getMainImg());
 			p.setQuantity(product.getQuantity());
 			p.setImagePath(product.getImagePath());
 			p.setSpecification(product.getSpecification());
@@ -121,6 +111,11 @@ public class ProductServiceImpl implements ProductService {
 			p.setManufacturer(product.getManufacturer());
 			p.setAboutItem(product.getAboutItem());
 			p.setPrice(product.getPrice());
+			if(product.getDiscountPercentage() != null){
+				p.setDiscountedPrice(product.getPrice() - (product.getPrice()*product.getDiscountPercentage())/100);
+			}else {
+				p.setDiscountedPrice(product.getPrice());
+			}
 			Category c = p.getCategory();
 			c.setCategoryName(product.getCategoryName());
 			List<Product> products = c.getProducts();
@@ -136,10 +131,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			return p;
 		}
-	      
-	
 
-	
 	@Override
 	public Product productById(Integer productId) throws ProductException {
 		// TODO Auto-generated method stub

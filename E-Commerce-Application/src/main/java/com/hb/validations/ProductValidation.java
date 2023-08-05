@@ -1,6 +1,7 @@
 package com.hb.validations;
 
-import org.springframework.validation.Errors; 
+import com.hb.models.PaginationDTO;
+import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -11,9 +12,14 @@ public class ProductValidation implements Validator{
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-	
-	return ProductDTO.class.equals(clazz);
+	boolean check = ProductDTO.class.equals(clazz);
+	if(PaginationDTO.class.equals(clazz)){
+		check = true;
 	}
+	return check;
+	}
+
+
 
 	@Override
 	public void validate(Object target, Errors errors) {

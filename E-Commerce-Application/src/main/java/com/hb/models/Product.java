@@ -48,6 +48,9 @@ public class Product {
 	
 	@Column(name = "price")
 	private Double price;
+
+	@Column(name ="discounted_price")
+	private Double discountedPrice;
 	
 	@Column(name = "dimension")
 	private String dimension;
@@ -80,7 +83,7 @@ public class Product {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Reviews> reviews = new ArrayList<>();
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Customer admin;
 	
 	
