@@ -49,16 +49,16 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 		 http.csrf()
 		 .disable()
 		 .authorizeRequests()
-		 .antMatchers("/login","/Customer/create","/product/pagination","/current-user").permitAll()
-         .antMatchers("/Customer/update/{customerId}",
-			"/Customer/cart/{customerId}/{quantity}/{productId}",
-			"/Customer/getAllProductAddedInCart/{customerId}",
-			"/Customer/removeProductFromCart/{productId}/{customerId}",
-			"/Customer/updatingQuantity/{productId}/{quantity}/{customerId}",
-			"/Customer/removeAllProductfromCart/{customerId}",
-			"/Customer/cancelOrder/{orderId}",
-			"/Customer/delete/{customerId}",
-			"/Customer/getAllOrdersByCustomer/{customerId}").hasAnyAuthority("USER","ADMIN")
+		 .antMatchers("/login","/customer/create","/product/pagination","/current-user").permitAll()
+         .antMatchers("/customer/update/{customerId}",
+			"/customer/cart/{customerId}/{quantity}/{productId}",
+			"/customer/getAllProductAddedInCart/{customerId}",
+			"/customer/removeProductFromCart/{productId}/{customerId}",
+			"/customer/updatingQuantity/{productId}/{quantity}/{customerId}",
+			"/customer/removeAllProductfromCart/{customerId}",
+			"/customer/cancelOrder/{orderId}",
+			"/customer/delete/{customerId}",
+			"/customer/getAllOrdersBycustomer/{customerId}").hasAnyAuthority("USER","ADMIN")
          .anyRequest().hasAuthority("ADMIN")
          .and()
 		.exceptionHandling().authenticationEntryPoint(this.jwtauthEntry)
