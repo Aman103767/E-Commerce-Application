@@ -127,7 +127,7 @@ public class ProductController {
 	    	productPage.setSortDirection(Sort.Direction.DESC);
 	    }
 	    if(paginationDTO.getName() != null) {
-	    	if(isNumeric(paginationDTO.getName())) {
+	    	if(paginationDTO.getName() != null && !paginationDTO.getName().equals("") && isNumeric(paginationDTO.getName())) {
 	    		Double price = Double.parseDouble(paginationDTO.getName());
 	    		productSearchCritaria.getProduct().setPrice(price);
 	    	}
@@ -136,6 +136,7 @@ public class ProductController {
 	 	    productSearchCritaria.getProduct().setDimension(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().setManufacturer(paginationDTO.getName());
 	 	    productSearchCritaria.getProduct().setSpecification(paginationDTO.getName());
+			productSearchCritaria.setSearch(paginationDTO.getSearch());
 	    }
 	    if (paginationDTO.getMinAmount() != null) {
 	        Double minAmount = paginationDTO.getMinAmount();

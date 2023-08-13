@@ -80,9 +80,7 @@ public class CustomerController {
 			return new ResponseEntity<>(errors.getAllErrors(),HttpStatus.BAD_REQUEST);
 		}
 		Customer cust = custService.createCustomer(cDTO);
-		
 		return new ResponseEntity<Customer>(cust,HttpStatus.OK);
-		
 		
 	}
 	@PutMapping("/update/{customerId}")

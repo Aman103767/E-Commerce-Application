@@ -10,4 +10,5 @@ public class ProductSearchCritaria {
   String price;
   Double minPrice;
   Double maxPrice;
+  Boolean search;
 }

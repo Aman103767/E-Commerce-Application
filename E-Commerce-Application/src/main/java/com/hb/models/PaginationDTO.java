@@ -11,5 +11,6 @@ public class PaginationDTO {
    private boolean direction;
    private Double minAmount;
    private Double maxAmount;
+   private Boolean search;
  
 }

@@ -47,7 +47,11 @@ public class ProductCriteriaRepository {
 		
 		Pageable pageable = getPageable(productPage);
 		long productCount = getProductCount(predicate);
-		return new PageImpl<>(typeQuery.getResultList(),pageable,productCount);
+		if(productSearchCritaria.getSearch()!= null && productSearchCritaria.getSearch()){
+			return new PageImpl<>(typeQuery.setMaxResults(3).getResultList(),pageable,productCount);
+		}else{
+			return new PageImpl<>(typeQuery.getResultList(),pageable,productCount);
+		}
 	}
 	private long getProductCount(Predicate predicate) {
 		// TODO Auto-generated method stub
