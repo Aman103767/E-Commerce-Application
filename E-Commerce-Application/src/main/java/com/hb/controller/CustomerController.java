@@ -5,9 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
+import com.hb.models.*;
+import com.hb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -29,21 +32,7 @@ import com.hb.exceptions.CartException;
 import com.hb.exceptions.CustomerException;
 import com.hb.exceptions.OrderException;
 import com.hb.exceptions.ProductException;
-import com.hb.models.Address;
-import com.hb.models.AddressDto;
-import com.hb.models.AuthAddress;
-import com.hb.models.Cart;
-import com.hb.models.Customer;
-import com.hb.models.CustomerDTO;
-import com.hb.models.Orders;
-import com.hb.models.Product;
-import com.hb.models.ProductDtoSec;
-import com.hb.models.Reviews;
 import com.hb.security.JwtAuthResponse;
-import com.hb.service.CartService;
-import com.hb.service.CustomerService;
-import com.hb.service.OrderService;
-import com.hb.service.ProductService;
 import com.hb.validations.CustomerValidation;
 
 @RestController
@@ -65,6 +54,9 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerValidation validator;
+
+	@Autowired
+	private ProductServiceImpl productServiceImpl;
 	
 	
 
@@ -150,10 +142,19 @@ public class CustomerController {
 		return new  ResponseEntity<String>(str,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getAllOrdersByCustomer/{customerId}")
-	public ResponseEntity<List<Orders>> getAllOrders(@PathVariable Integer customerId) throws OrderException, CustomerException {
-		List<Orders> orders = orderService.getAllOrdersByCustomer(customerId);
-		return new ResponseEntity<List<Orders>>(orders,HttpStatus.OK);
+	@PostMapping("/getAllOrdersByCustomer/{customerId}")
+	public ResponseEntity<Page<Orders>> getAllOrders(@PathVariable Integer customerId , @RequestBody PaginationDTO paginationDTO) throws OrderException, CustomerException {
+		ProductPage orderPage = new ProductPage();
+		OrderSearchCritaria orderSearchCritaria = new OrderSearchCritaria();
+		orderPage.setPageNumber(paginationDTO.getPageNumber());
+		orderPage.setPageSize(paginationDTO.getPageSize());
+		orderPage.setSortBy(paginationDTO.getSortBy());
+		if(paginationDTO.isDirection() == true) {
+			orderPage.setSortDirection(Sort.Direction.DESC);
+		}
+		if(paginationDTO.getName() != null)
+			orderSearchCritaria.setSearchName(paginationDTO.getName());
+		return new ResponseEntity<>(productServiceImpl.getOrder(orderPage, orderSearchCritaria),HttpStatus.OK);
 	}
 	@PostMapping("/review/{customerId}/{productId}/{orderId}")
 	public ResponseEntity<Reviews> addReviewToproductAdmin(@PathVariable Integer customerId, @PathVariable Integer productId,@PathVariable Integer orderId, @RequestBody Reviews review) throws CustomerException, ProductException{

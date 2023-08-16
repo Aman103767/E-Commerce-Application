@@ -11,16 +11,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.hb.models.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-
-import com.hb.models.Product;
-import com.hb.models.ProductPage;
-import com.hb.models.ProductSearchCritaria;
 
 @Repository
 public class ProductCriteriaRepository {
@@ -59,7 +56,13 @@ public class ProductCriteriaRepository {
 		Root<Product> countRoot = countQuery.from(Product.class);
 		countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
 		return entityManager.createQuery(countQuery).getSingleResult();
-	
+	}
+	private long getOrderCount(Predicate predicate) {
+		// TODO Auto-generated method stub
+		CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+		Root<Orders> countRoot = countQuery.from(Orders.class);
+		countQuery.select(criteriaBuilder.count(countRoot)).where(predicate);
+		return entityManager.createQuery(countQuery).getSingleResult();
 	}
 	private Pageable getPageable(ProductPage productPage) {
 		// TODO Auto-generated method stub
@@ -96,10 +99,38 @@ public class ProductCriteriaRepository {
 			Double maxPrice = productSearchCritaria.getMaxPrice();
 			predicates.add(criteriaBuilder.between(productRoot.get("discountedPrice"), minPrice, maxPrice));
 		}
-
-		
 		return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 	}
-	
-	
+	private Predicate getPredicateOrders(OrderSearchCritaria orderSearchCritaria,
+										 Root<Orders> ordersRoot){
+		List<Predicate> predicates = new ArrayList<>();
+//		if(Objects.nonNull(productSearchCritaria.getSearchName())){
+//			predicates.add(criteriaBuilder.or(
+//
+//					criteriaBuilder.like(criteriaBuilder.upper(ordersRoot.get("products.")), "%"+productSearchCritaria.getSearchName()+"%")
+//					));
+//		}
+		return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+	}
+	private void setOrderForOrders(ProductPage orderPage, CriteriaQuery<Orders> criteriaQuery, Root<Orders> orderRoot){
+		if(orderPage.getSortDirection().equals(Sort.Direction.ASC)) {
+			criteriaQuery.orderBy(criteriaBuilder.asc(orderRoot.get(orderPage.getSortBy())));
+		}else {
+			criteriaQuery.orderBy(criteriaBuilder.desc(orderRoot.get(orderPage.getSortBy())));
+		}
+	}
+
+	public Page<Orders> findAllOrderWithFilter(ProductPage orderPage, OrderSearchCritaria orderSearchCritaria){
+		CriteriaQuery<Orders> criteriaQuery = criteriaBuilder.createQuery(Orders.class);
+		Root<Orders> orderRoot = criteriaQuery.from(Orders.class);
+		Predicate predicate = getPredicateOrders(orderSearchCritaria,orderRoot);
+		criteriaQuery.where(predicate);
+		setOrderForOrders(orderPage,criteriaQuery,orderRoot);
+		TypedQuery<Orders> typeQuery = entityManager.createQuery(criteriaQuery);
+		typeQuery.setFirstResult(orderPage.getPageNumber()*orderPage.getPageSize());
+		typeQuery.setMaxResults(orderPage.getPageSize());
+		Pageable pageable = getPageable(orderPage);
+		long orderCount = getOrderCount(predicate);
+		return new PageImpl<>(typeQuery.getResultList(),pageable,orderCount);
+	}
 }

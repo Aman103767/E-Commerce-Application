@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List; 
 import java.util.Optional;
 
+import com.hb.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,18 +16,6 @@ import org.springframework.stereotype.Service;
 import com.hb.exceptions.AdminException;
 import com.hb.exceptions.CustomerException;
 import com.hb.exceptions.ProductException;
-import com.hb.models.Admin;
-import com.hb.models.Category;
-import com.hb.models.Customer;
-import com.hb.models.Helpful;
-import com.hb.models.Orders;
-import com.hb.models.Product;
-import com.hb.models.ProductDTO;
-import com.hb.models.ProductDtoSec;
-import com.hb.models.ProductPage;
-import com.hb.models.ProductSearchCritaria;
-import com.hb.models.ReviewTo;
-import com.hb.models.Reviews;
 import com.hb.repository.AdminDao;
 import com.hb.repository.CustomerDao;
 import com.hb.repository.HelpfulDao;
@@ -197,6 +186,10 @@ public class ProductServiceImpl implements ProductService {
 	public Page<Product> getProduct(ProductPage productPage, 
 			ProductSearchCritaria productSearchCritaria){
 		return productCriteriaRepository.findAllWithFilters(productPage,productSearchCritaria);
+	}
+	public Page<Orders> getOrder(ProductPage OrderPage,
+									OrderSearchCritaria orderSearchCritaria){
+		return productCriteriaRepository.findAllOrderWithFilter(OrderPage,orderSearchCritaria);
 	}
 
 	@Override
