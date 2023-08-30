@@ -5,7 +5,7 @@ This is a Individual project, I have built a rest API service for an Online Shop
 - Deployed on Ec2 Instance on AWS.
 - Created S3 Bucket for storage of Jar file.
 - Created MySQL Database on AWS which is configure in jar file.
-- Included security group for Custom TSP port 8888 anywhere.
+- Included security group for Custom TCP port 8888 anywhere.
 
 # Angular
 - For front-end I have used Angular.
