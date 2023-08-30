@@ -1,6 +1,16 @@
-# REST API For E-Commerce Application
+# REST API For E-Commerce Application (BindGo-E-Commerce)
 This is a Individual project, I have built a rest API service for an Online Shopping Application which can be used by customers to login into their profile, update their information and Add the product to the cart and order them. All this is over looked by the admin who can also login and update their information as well as access the data in the Admin Module. 
 
+# AWS 
+- Deployed on Ec2 Instance on AWS.
+- Created S3 Bucket for storage of Jar file.
+- Created MySQL Database on AWS which is configure in jar file.
+- Included security group for Custom TSP port 8888 anywhere.
+
+# Angular
+- For front-end I have used Angular.
+- Whole website front-end flow made of Angular throught that i have called the RestFull APIs.
+  
 ### Database Schema
 
 ![Untitled (1)](https://github.com/Aman103767/E-Commerce-Application/assets/54835356/ac2d2320-46fe-4017-9f03-18b81e654a5d)
