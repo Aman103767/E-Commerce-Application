@@ -10,6 +10,7 @@ This is a Individual project, I have built a rest API service for an Online Shop
 # Angular
 - For front-end I have used Angular.
 - Whole website front-end flow made of Angular throught that i have called the RestFull APIs.
+- Angular also deplayed on AWS S3 Bucket as static website.
   
 ### Database Schema
 
