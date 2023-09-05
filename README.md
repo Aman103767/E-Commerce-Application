@@ -7,7 +7,8 @@ This is a Individual project, I have built a rest API service for an Online Shop
 - Created MySQL Database on AWS which is configure in jar file.
 - Included security group for Custom TCP port 8888 anywhere.
 
-# Angular
+# Angular 
+- https://bindgo.netlify.app/
 - For front-end I have used Angular.
 - Whole website front-end flow made of Angular throught that i have called the RestFull APIs.
 - Angular also deplayed on AWS S3 Bucket as static website.
