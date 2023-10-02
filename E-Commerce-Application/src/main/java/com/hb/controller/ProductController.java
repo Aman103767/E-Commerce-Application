@@ -80,6 +80,15 @@ public class ProductController {
 		Product p = pService.createProduct(product,adminId);
 	return new ResponseEntity<Product>(p,HttpStatus.OK);
 	}
+
+	@PostMapping("/list/create/{adminId}")
+	public ResponseEntity<?> createProductList(@RequestBody List<ProductDTO> products, @PathVariable Integer adminId, Errors errors) throws ProductException, CustomerException {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<>(errors.getAllErrors(),HttpStatus.BAD_REQUEST);
+		}
+		List<Product> productList = pService.addProductList(products,adminId);
+		return new ResponseEntity<List<Product>>(productList,HttpStatus.OK);
+	}
 	@PutMapping("/updateProduct/{productId}")
 	public ResponseEntity<?> updateProduct(@PathVariable Integer productId,
 			@Valid @RequestBody ProductDTO product,Errors errors ) throws ProductException {
@@ -178,5 +187,5 @@ public class ProductController {
 		Reviews reviews = pService.addHelpfullCount(reviewId,customerId);
 		return new ResponseEntity<Reviews>(reviews,HttpStatus.OK);
 	}
-	
+
 }

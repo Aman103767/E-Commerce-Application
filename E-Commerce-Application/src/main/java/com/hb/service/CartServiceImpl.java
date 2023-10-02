@@ -77,7 +77,7 @@ public class CartServiceImpl implements CartService{
 		//	return c1.toString()
 			c1 = new Cart();
 			c1.getCartproducts().add(prodto2);
-		    c1.setCustomer(customer);
+//		    c1.setCustomer(customer);
 		    customer.setCart(c1);
 		    
 		    
@@ -135,14 +135,14 @@ public class CartServiceImpl implements CartService{
 	           }
 	          boolean flag = true;
 	           for(int i =0;i<products.size();i++) {
-	        	   if(productId == products.get(i).getProductId()) {
+	        	   if(productId.intValue() == products.get(i).getProductId().intValue()) {
 	        		   products.remove(i);
 	        		   flag = false;
 	        		   break;
 	        	   }
 	           }
 	           if(flag) {
-	        	   throw new CartException("Product is not added to cart please the product");
+	        	   throw new CartException("Product is not added to cart please add the product");
 	           }
 	           cart.setCartproducts(products);
 	           cartdao.save(cart);
@@ -173,7 +173,7 @@ public class CartServiceImpl implements CartService{
 		         }
 		         ProductDtoSec prodto = null;
 		           for(int i =0;i<products.size();i++) {
-		        	   if(productId == products.get(i).getProductId()) {
+		        	   if(productId.intValue() == products.get(i).getProductId().intValue()) {
 		        		  
 		        		   if(quantity>product.getQuantity() || quantity == 0) {
 		        			   throw new CartException("product out of Stock");

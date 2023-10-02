@@ -239,11 +239,11 @@ public class ProductServiceImpl implements ProductService {
 		Reviews productReview = null;
 		boolean flag = false;
 		for(ProductDtoSec o : order.getProducts()) {
-			if(o.getProductId() == productId) {
+			if(o.getProductId().intValue() == productId.intValue()) {
 				List<Reviews> reviews = product.getReviews();
 				for(Reviews review : reviews) {
-					if(review.getCustomerId() == customerId) {
-						if(review.getOrderId() == orderId) {
+					if(review.getCustomerId().intValue() == customerId.intValue()) {
+						if(review.getOrderId().intValue() ==orderId.intValue()) {
 							productReview = review;
 							flag = true;
 							break;
@@ -316,6 +316,43 @@ public class ProductServiceImpl implements ProductService {
 			reviews.setHelpful(helpful);
 			return reviewDao.save(reviews);
 		}
-	   
-	 } 
+
+	 }
+
+	@Override
+	public List<Product> addProductList(List<ProductDTO> products, Integer adminId) throws CustomerException {
+		Customer admin = custDao.findById(adminId).get();
+		if(admin == null) {
+			throw new CustomerException("Admin not found");
+		}
+		List<Product> returnProducts = new ArrayList<>();
+		for(ProductDTO product : products){
+			Product p = new Product();
+			p.setProductName(product.getProductName());
+			p.setMainImg(product.getMainImg());
+			p.setImagePath(product.getImagePath());
+			p.setBrand(product.getBrand());
+			p.setQuantity(product.getQuantity());
+			p.setSpecification(product.getSpecification());
+			p.setDimension(product.getDimension());
+			p.setManufacturer(product.getManufacturer());
+			p.setPrice(product.getPrice());
+			p.setAboutItem(product.getAboutItem());
+			p.setDiscountPercentage(product.getDiscountPercentage());
+			p.setInDeliveryDays(product.getInDeliveryDays());
+			if(product.getDiscountPercentage() != null){
+				p.setDiscountedPrice(product.getPrice() - (product.getPrice()*product.getDiscountPercentage())/100);
+			}else {
+				p.setDiscountedPrice(product.getPrice());
+			}
+			p.setAdmin(admin);
+			Category c = new Category();
+			c.setCategoryName(product.getCategoryName());
+			p.setCategory(c);
+			c.getProducts().add(p);
+			returnProducts.add(p);
+		}
+		return pdao.saveAll(returnProducts);
+
+	}
 }

@@ -40,6 +40,6 @@ public interface ProductService {
 	
 	public Reviews addHelpfullCount(Integer reviewId, Integer customerId) throws ProductException, CustomerException;
 	
-
+	public List<Product> addProductList(List<ProductDTO> products, Integer adminId) throws CustomerException;
 
 }

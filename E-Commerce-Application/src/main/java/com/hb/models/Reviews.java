@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Reviews {
+public class 	Reviews {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

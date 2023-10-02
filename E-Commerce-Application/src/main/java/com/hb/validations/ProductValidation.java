@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import com.hb.controller.ProductController;
 import com.hb.models.ProductDTO;
+
+import java.util.ArrayList;
+
 @ControllerAdvice(assignableTypes = ProductController.class)
 public class ProductValidation implements Validator{
 
@@ -18,6 +21,9 @@ public class ProductValidation implements Validator{
 		check = true;
 	}
 	if(Reviews.class.equals(clazz)){
+		check = true;
+	}
+	if(ArrayList.class.equals(clazz)){
 		check = true;
 	}
 	return check;

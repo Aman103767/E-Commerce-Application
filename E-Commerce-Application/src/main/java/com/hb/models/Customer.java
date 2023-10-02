@@ -25,15 +25,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Customer extends User{
 	@Id
-	@GeneratedValue(strategy  = GenerationType.AUTO) 
+	@GeneratedValue(strategy  = GenerationType.AUTO)
 	private int customerId;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
 	private List<Address> addresses = new ArrayList<>();
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JsonIgnore
     private Cart cart;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	List<Reviews> reviews = new ArrayList<>();
 

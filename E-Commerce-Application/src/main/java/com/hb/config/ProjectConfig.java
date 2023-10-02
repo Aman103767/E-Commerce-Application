@@ -49,7 +49,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 		 http.csrf()
 		 .disable()
 		 .authorizeRequests()
-		 .antMatchers("/login","/customer/create","/product/pagination","/current-user").permitAll()
+		 .antMatchers("/","/login","/customer/create","/product/pagination","/current-user","/admin/getProductById/{productId}").permitAll()
          .antMatchers("/customer/update/{customerId}",
 			"/customer/cart/{customerId}/{quantity}/{productId}",
 			"/customer/getAllProductAddedInCart/{customerId}",

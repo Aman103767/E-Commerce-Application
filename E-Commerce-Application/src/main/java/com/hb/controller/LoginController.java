@@ -57,6 +57,12 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private CustomerDao custDao;
+
+
+    @GetMapping
+    public String application(){
+        return "Welcome to Aman Sharma E-Commerce Application";
+    }
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody LoginForm request) throws Exception {
         this.authenticate(request.getUsername(),request.getPassword());

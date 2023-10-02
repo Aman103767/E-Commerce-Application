@@ -57,9 +57,9 @@ public class OrderServiceImpl implements OrderService{
 				throw new OrderException("Please add the product in the cart first!");
 			}
 			Orders order = new Orders();
-			Customer cust = cart.getCustomer();
-				List<Address> addresses = cust.getAddresses();
-				if(cust.getAddresses() == null || cust.getAddresses().size() == 0) {
+//			Customer cust = cart.getCustomer();
+				List<Address> addresses = customer.getAddresses();
+				if(customer.getAddresses() == null || customer.getAddresses().size() == 0) {
 					throw new OrderException("Please add address there is no addresss for this customer");
 				}
 				for(Address  i : addresses) {
@@ -67,9 +67,9 @@ public class OrderServiceImpl implements OrderService{
 						order.setAddress(i);
 			}
 				}
-			custdao.save(cust);
+			custdao.save(customer);
 			order.setOrderDate(LocalDate.now());
-			order.setCustomer(cust);
+			order.setCustomer(customer);
 			List<ProductDtoSec> products= new ArrayList<>();
 			for(ProductDtoSec p : cart.getCartproducts()) {
 				totalAmount += (int) Math.floor(p.getPrice());

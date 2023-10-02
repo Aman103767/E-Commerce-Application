@@ -23,8 +23,8 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
   private Integer cartId;
- @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")	  
- private Customer customer;
+// @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
+// private Customer customer;
  
  @OneToMany(cascade = CascadeType.ALL)
  private List<ProductDtoSec> Cartproducts = new ArrayList<>();
