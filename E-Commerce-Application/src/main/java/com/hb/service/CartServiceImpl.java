@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService{
 //		}
 		List<ProductDtoSec> list = c1.getCartproducts();
 		for(int i=0;i<list.size();i++) {
-			if(productId == list.get(i).getProductId()) {
+			if(productId.intValue() == list.get(i).getProductId().intValue()) {
 			   return "Product is already added to the cart";
 			}
 		}
