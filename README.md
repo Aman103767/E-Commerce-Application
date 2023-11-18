@@ -8,7 +8,7 @@ This is a Individual project, I have built a rest API service for an Online Shop
 - Included security group for Custom TCP port 8888 anywhere.
 
 # Angular 
-- Delpoyed on AWS - http://bindgo-angular-application.s3-website-us-east-1.amazonaws.com/
+- Delpoyed on AWS - [http://bindgo-angular-application.s3-website-us-east-1.amazonaws.com/](http://bindgo.s3-website-us-east-1.amazonaws.com/)
 - For front-end I have used Angular.
 - Whole website front-end flow made of Angular throught that i have called the RestFull APIs.
 - Angular also deplayed on AWS S3 Bucket as static website.
