@@ -87,6 +87,9 @@ public class LoginController {
 		String username = jwtTokenHelper.getUsernameFromToken(token.getToken());
 		System.out.println("token--" + token);
 		System.out.println(username);
+        if(username.contains("@")){
+            return custDao.findByEmail(username);
+        }
 		return custDao.findByMobileNumber(username);
 	}
 	

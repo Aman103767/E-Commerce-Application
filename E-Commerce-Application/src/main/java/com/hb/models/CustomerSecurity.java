@@ -11,11 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomerSecurity implements UserDetails{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
     private Customer customer;
-    
+
     public CustomerSecurity(Customer customer) {
     	this.customer = customer;
     }
@@ -25,7 +25,7 @@ public class CustomerSecurity implements UserDetails{
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(customer.getRole()));
 		return grantedAuthorities;
-		
+
 	}
 
 	@Override
@@ -36,9 +36,13 @@ public class CustomerSecurity implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return customer.getMobileNumber();
+		if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
+			return customer.getEmail();
+		} else {
+			return customer.getMobileNumber();
+		}
 	}
+
 
 	@Override
 	public boolean isAccountNonExpired() {

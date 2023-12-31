@@ -55,10 +55,12 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer createCustomer(CustomerDTO customer) throws CustomerException {
 
 		Customer existingCustomer= custDao.findByMobileNumber(customer.getMobileNumber());
+		Customer existingCustomerWithEmail = custDao.findByEmail(customer.getEmail());
 
 		if(existingCustomer != null) 
 			throw new CustomerException("Customer Already Registered with Mobile number");
-
+		if(existingCustomerWithEmail != null)
+			throw new CustomerException("Customer Already Registerd with same Email");
 		// TODO Auto-generated method stub
 		Customer cust = new Customer();
 		cust.setUsername(customer.getUsername());
